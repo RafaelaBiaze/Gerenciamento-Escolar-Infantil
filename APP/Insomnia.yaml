@@ -1,0 +1,211 @@
+type: collection.insomnia.rest/5.0
+name: Faat
+meta:
+  id: wrk_f1f22493c7e54d498b8edd5d85336d3b
+  created: 1746921355371
+  modified: 1746921355371
+collection:
+  - name: Base project
+    meta:
+      id: fld_7a5abd7c264841478455d24711b6e156
+      created: 1746921367443
+      modified: 1747956716262
+      sortKey: -1746921367443
+    children:
+      - url: http://localhost:8080/api/example
+        name: Insert
+        meta:
+          id: req_ab80ed9fa8eb4e00885ad856971c4522
+          created: 1746921369872
+          modified: 1747954942596
+          isPrivate: false
+          sortKey: -1746921369872
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome": "teste 2"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/example
+        name: List
+        meta:
+          id: req_1854b64b316a4cce8eabf582639ac43d
+          created: 1746921509547
+          modified: 1747957811549
+          isPrivate: false
+          sortKey: -1746272969214.5
+        method: GET
+        parameters:
+          - id: pair_f5a7897d98e5480baad928e8072bddc5
+            name: limit
+            value: "10"
+            disabled: false
+          - id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+            name: offset
+            value: "10"
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/example/13
+        name: Update
+        meta:
+          id: req_99cb0bbbe6d7453697b35575f1726073
+          created: 1746921688594
+          modified: 1747955907726
+          isPrivate: false
+          sortKey: -1746597169543.25
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome": "Charmander",
+            	"esta_ativo": false
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/example/100
+        name: Get
+        meta:
+          id: req_6592c1af854941e89eb2d4fc6787a5eb
+          created: 1747954951819
+          modified: 1747958462356
+          isPrivate: false
+          sortKey: -1744724780910.25
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/example/11
+        name: Delete
+        meta:
+          id: req_cad1c2fd74ee4b858cda824be766a766
+          created: 1747956113348
+          modified: 1747956292240
+          isPrivate: false
+          sortKey: -1743950686758.125
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/env
+        name: env
+        meta:
+          id: req_6022df346fd347dcb3f465532ac1af04
+          created: 1747957175536
+          modified: 1747958475181
+          isPrivate: false
+          sortKey: -1744337733834.1875
+        method: GET
+        parameters:
+          - id: pair_f5a7897d98e5480baad928e8072bddc5
+            name: limit
+            value: "10"
+            disabled: false
+          - id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+            name: offset
+            value: "10"
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/
+        name: Home
+        meta:
+          id: req_ed7e211851e843709a853da2bd5e8397
+          created: 1747958625462
+          modified: 1747958629229
+          isPrivate: false
+          sortKey: -1744144210296.1562
+        method: GET
+        parameters:
+          - id: pair_f5a7897d98e5480baad928e8072bddc5
+            name: limit
+            value: "10"
+            disabled: false
+          - id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+            name: offset
+            value: "10"
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_16de509ae4c105dd727e908edee7f0e8ebaab954
+    created: 1746921355374
+    modified: 1746921355374
+environments:
+  name: Base Environment
+  meta:
+    id: env_16de509ae4c105dd727e908edee7f0e8ebaab954
+    created: 1746921355373
+    modified: 1746921355373
+    isPrivate: false
