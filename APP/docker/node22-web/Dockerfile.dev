@@ -1,5 +1,5 @@
 # Usa imagem oficial do Node 22
-FROM node:22
+FROM node:24
 
 # Entra de trabalho
 WORKDIR /app

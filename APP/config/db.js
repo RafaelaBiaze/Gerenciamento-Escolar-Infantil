@@ -1,6 +1,10 @@
+
 import { Pool } from 'pg';
+import dotenv from 'dotenv';
 
 export default (function () {
+
+    dotenv.config();
 
     const env = process.env;
 

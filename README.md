@@ -37,7 +37,13 @@ Este projeto consiste no desenvolvimento de um sistema de gerenciamento completo
    cd Gerenciamento-Escolar-Infantil
    ```
 
-3. Criar o arquivo `.env` na raiz do projeto(dentro de APP) copiando o .env.example:
+3. Depois de entrar na pasta do projeto, troque de diretório novamente para o APP(Onde a aplicação realmente está):
+
+   ```sh
+   cd APP
+   ```
+
+4. Criar o arquivo `.env` na raiz do projeto(dentro de APP) copiando o .env.example:
 
    > No windows:
 
@@ -51,7 +57,7 @@ Este projeto consiste no desenvolvimento de um sistema de gerenciamento completo
    cp .env.example .env
    ```
 
-4. Abrir o arquivo `.env` recém criado e preencher os campos abaixo:
+5. Abrir o arquivo `.env` recém criado e preencher os campos abaixo:
    > Este é apenas um exemplo para o funcionamento da aplicação, mudar as credenciais abaixo não irá afetar em nada.
 
     ```sh
@@ -60,7 +66,7 @@ Este projeto consiste no desenvolvimento de um sistema de gerenciamento completo
     JWT_SECRET=super_secreta
     ```
 
-5. Subir a aplicação com Docker Compose:
+6. Subir a aplicação com Docker Compose:
 
    ```sh
    docker-compose up --build
@@ -81,3 +87,5 @@ O servidor estará disponível em: [http://localhost:8080](http://localhost:8080
 Documentação api: [http://localhost:8080/docs](http://localhost:8080/docs)
 
 Observação: ./Insomnia.yml deve-se utilizar no Insomnia
+
+> Pasta `Docs` fora da aplicação, é somente para arquivos de documentação do banco de dados, como MER e DER.

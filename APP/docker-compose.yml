@@ -1,6 +1,6 @@
 services:
 
-  #NODE
+  #NODE WEB
   node-web-container:
     build:
       context: .
@@ -11,10 +11,29 @@ services:
       - node-modules-volume:/app/node_modules
     restart: unless-stopped
     environment:
-      - NODE_PORT=3000
       - IS_CONTAINER=TRUE
+      - POSTGRES_HOST=postgres_host
+      - POSTGRES_PORT=5432
     expose:
       - ${NODE_PORT}
+    networks:
+      - project-network
+    depends_on:
+      - postgres-container
+
+  #NODE CLI
+  cli-container:
+    build:
+      context: .
+      dockerfile: docker/node22-cli/Dockerfile
+    env_file: .env
+    volumes:
+      - .:/app
+      - node-modules-volume:/app/node_modules
+    environment:
+      - IS_CONTAINER=TRUE
+      - POSTGRES_HOST=postgres_host
+      - POSTGRES_PORT=5432
     networks:
       - project-network
     depends_on:
@@ -32,7 +51,9 @@ services:
     depends_on:
       - node-web-container
     networks:
-      - project-network
+      project-network:
+        aliases:
+            - web_host
 
   #POSTGRES
   postgres-container:
@@ -42,15 +63,16 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      TZ: America/Sao_Paulo
     ports:
-      - "6789:${POSTGRES_PORT}"
+      - "${POSTGRES_PORT}:5432"
     volumes:
       - pgdata-volume:/var/lib/postgresql/data
       - ./docker/postgres/init:/docker-entrypoint-initdb.d
     networks:
       project-network:
         aliases:
-          - ${POSTGRES_HOST}
+          - postgres_host
 
 
 #OTHERS

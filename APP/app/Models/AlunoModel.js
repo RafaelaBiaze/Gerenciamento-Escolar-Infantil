@@ -3,19 +3,8 @@ import { DataTypes } from 'sequelize';
 
 export default (function () {
 
-    /* 
-
-      sequelize.define(parametro1, parametro2, parametro3)
-      parametro1: string :: nome da model
-      parametro2: objeto_campos :: defnição dos campos
-      parametro3: objeto_configuracoes :: configurações gerais
-
-      objeto_campos: {campo_1: {...}, campo_2: {...}}
-    
-    */
-
     return sequelize.define(
-        "ExampleModel",
+        "AlunoModel",
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -27,16 +16,24 @@ export default (function () {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            esta_ativo: {
-                type: DataTypes.BOOLEAN,
+            created_at: {
+                type: DataTypes.DATE,
                 allowNull: false,
-                defaultValue: true
+                defaultValue: DataTypes.NOW
+            },
+            updated_at: {
+                type: DataTypes.DATE,
+                allowNull: false,
+                defaultValue: DataTypes.NOW
             }
         },
         {
-            tableName: "tabela_exemplo",
-            timestamps: false
-        }
+            tableName: "alunos",
+            timestamps: true,
+            updatedAt: "updated_at",
+            createdAt: "created_at"
+        },
+
     );
 
 })();
