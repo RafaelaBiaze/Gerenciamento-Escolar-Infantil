@@ -1,10 +1,10 @@
 services:
 
   #NODE WEB
-  node-web-container:
+  nodeweb-container:
     build:
       context: .
-      dockerfile: docker/node22-web/Dockerfile.dev
+      dockerfile: docker/node-web/Dockerfile.dev
     env_file: .env
     volumes:
       - .:/app
@@ -14,18 +14,25 @@ services:
       - IS_CONTAINER=TRUE
       - POSTGRES_HOST=postgres_host
       - POSTGRES_PORT=5432
+      - RABBITMQ_HOST=rabbitmq_host
+      - RABBITMQ_PORT=5672
+      - NGINX_HOST=nginx_host
+      - NGINX_PORT=80
     expose:
-      - ${NODE_PORT}
+      - 3000
     networks:
-      - project-network
+      project-network:
+        aliases:
+            - nodeweb_host
     depends_on:
       - postgres-container
+      - rabbitmq-container
 
   #NODE CLI
-  cli-container:
+  nodecli-container:
     build:
       context: .
-      dockerfile: docker/node22-cli/Dockerfile
+      dockerfile: docker/node-cli/Dockerfile
     env_file: .env
     volumes:
       - .:/app
@@ -34,10 +41,40 @@ services:
       - IS_CONTAINER=TRUE
       - POSTGRES_HOST=postgres_host
       - POSTGRES_PORT=5432
+      - RABBITMQ_HOST=rabbitmq_host
+      - RABBITMQ_PORT=5672
+      - NGINX_HOST=nginx_host
+      - NGINX_PORT=80
     networks:
       - project-network
     depends_on:
       - postgres-container
+      - rabbitmq-container
+
+  #NODE WORKER
+  nodeworker-container:
+    build:
+      context: .
+      dockerfile: docker/node-worker/Dockerfile.dev
+    env_file: .env
+    volumes:
+      - .:/app
+      - node-modules-volume:/app/node_modules
+    restart: unless-stopped
+    environment:
+      - IS_CONTAINER=TRUE
+      - POSTGRES_HOST=postgres_host
+      - POSTGRES_PORT=5432
+      - RABBITMQ_HOST=rabbitmq_host
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_CONCURRENCY=2
+      - NGINX_HOST=nginx_host
+      - NGINX_PORT=80
+    networks:
+      - project-network
+    depends_on:
+      - postgres-container
+      - rabbitmq-container
 
   #NGINX
   nginx-container:
@@ -45,15 +82,15 @@ services:
       context: .
       dockerfile: docker/nginx/Dockerfile
     ports:
-      - "${PORT}:80"
+      - "${NGINX_PORT}:80"
     volumes:
       - ./public:/var/www/public
     depends_on:
-      - node-web-container
+      - nodeweb-container
     networks:
       project-network:
         aliases:
-            - web_host
+            - nginx_host
 
   #POSTGRES
   postgres-container:
@@ -74,6 +111,22 @@ services:
         aliases:
           - postgres_host
 
+  #RABBITMQ
+  rabbitmq-container:
+    image: rabbitmq:3.13.1-management-alpine
+    ports:
+      - "${RABBITMQ_PORT}:5672"    # Porta para conexão com a fila (producers/consumers)
+      - "15672:15672"              # Porta do painel de gerenciamento web
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - rabbitmq-volume:/var/lib/rabbitmq
+    networks:
+      project-network:
+        aliases:
+          - rabbitmq_host
+
 
 #OTHERS
 
@@ -84,3 +137,4 @@ networks:
 volumes:
   pgdata-volume:
   node-modules-volume:
+  rabbitmq-volume:

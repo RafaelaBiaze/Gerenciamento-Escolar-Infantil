@@ -6,6 +6,9 @@ import web from './web.js';
 import JwtAuthMiddleware from '../app/Http/Middlewares/JwtAuthMiddleware.js';
 import LoginJwtController from '../app/Http/Controllers/LoginJwtController.js';
 import fileUpload from 'express-fileupload';
+import LogMiddleware from '../app/Http/Middlewares/LogMiddleware.js';
+import CreateJobController from '../app/Http/Controllers/CreateJobController.js';
+import HttpDemoradoController from '../app/Http/Controllers/Filas/HttpDemoradoController.js';
 
 export default (function () {
 
@@ -19,8 +22,10 @@ export default (function () {
     router.use(fileUpload());
 
     // Apis
-    router.use('/api', JwtAuthMiddleware, api);
+    router.use('/api', JwtAuthMiddleware, LogMiddleware, api);
     router.post('/login', LoginJwtController);
+    router.get("/fila", CreateJobController);
+    router.get("/slow", HttpDemoradoController);
 
     ////
     router.use('/', web);

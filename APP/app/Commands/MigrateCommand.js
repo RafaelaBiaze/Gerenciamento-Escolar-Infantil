@@ -1,5 +1,5 @@
 import path from 'path';
-import createMigrationManager from '../../Core/MigrationMaganer.js';
+import createMigrationManager from '../../Core/MigrationCore/MigrationMaganer.js';
 
 export default {
 

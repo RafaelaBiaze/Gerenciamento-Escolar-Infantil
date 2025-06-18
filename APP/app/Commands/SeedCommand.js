@@ -1,5 +1,5 @@
 import path from 'path';
-import createSeedManager from '../../Core/SeedMaganer.js';
+import createSeedManager from '../../Core/SeedCore/SeedMaganer.js';
 
 export default {
 

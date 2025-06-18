@@ -8,5 +8,5 @@ export default {
         NOT_FOUND: 404,
         SERVER_ERROR: 500
     },
-    MAX_GET_LIMIT: 10
+    MAX_GET_LIMIT: 100
 };

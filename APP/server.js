@@ -13,10 +13,12 @@ app.use("/", routes);
 
 initRelations();
 
-/** Escolher as portas baseado se foi inicializado com ou sem nginx */
-const webPort = process.env.PORT || 3000;
+const nodePort = 3000;
 
-const nodePort = process.env.NODE_PORT || webPort;
+/** Escolher as portas baseado se foi inicializado com ou sem nginx */
+const webPort = 8080;
+
+
 
 app.listen(nodePort, () => {
     console.log(chalk.green(`Servidor: http://localhost:${webPort}`));

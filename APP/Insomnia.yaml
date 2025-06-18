@@ -1,25 +1,25 @@
 type: collection.insomnia.rest/5.0
-name: UniFaat - DevWeb - Aula14 - TF
+name: UniFaat - DevWeb
 meta:
-  id: wrk_79322fcbfff543b7a7dbf7675a44b951
-  created: 1749474063003
-  modified: 1749474063003
+  id: wrk_1764ad092597462a93e22dc0d6b310f7
+  created: 1747958810409
+  modified: 1748119358883
   description: ""
 collection:
-  - name: Alunos
+  - name: Colaboradores
     meta:
-      id: fld_cfda923df6d24f5294fc44bddd0c95ca
-      created: 1749474063005
-      modified: 1749474095622
+      id: fld_70f220ceb79b45e19a2e48e16844e8fe
+      created: 1748022818785
+      modified: 1748867342408
       sortKey: -1748022818785
       description: ""
     children:
-      - url: http://localhost:8080/api/alunos
+      - url: http://localhost:8080/api/colaboradores
         name: Listar
         meta:
-          id: req_04383c2eb05e46c790a6b2ad69823498
-          created: 1749474063005
-          modified: 1749474941029
+          id: req_3d0ef3d3523f45f68b1aecc8a50a216b
+          created: 1748022825329
+          modified: 1748886809573
           isPrivate: false
           description: ""
           sortKey: -1748023025581
@@ -39,6 +39,200 @@ collection:
             id: pair_b2f96640e2664cd787f595b1629709d1
         authentication:
           type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsIm5vbWUiOiJVc2VyMSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NDg4ODY4MDAsImV4cCI6MTc0ODg4NzQwMH0.UEQz9FsO04G37IZbp3yMKh9rh7Yspy4j6tza-fELbOw
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/colaboradores
+        name: Inserir
+        meta:
+          id: req_f4d4b5f60140436f946ad1bc74785e37
+          created: 1748136502237
+          modified: 1748867303267
+          isPrivate: false
+          description: ""
+          sortKey: -1747976565966.25
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome": "Luan",
+            	"esta_ativo": true
+            }
+        parameters:
+          - name: limit
+            value: "10"
+            disabled: false
+            id: pair_f5a7897d98e5480baad928e8072bddc5
+          - name: offset
+            value: "0"
+            disabled: false
+            id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: none
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/colaboradores/1
+        name: Atualizar
+        meta:
+          id: req_c51da99f806e45ee83e0471546f813e7
+          created: 1748136561423
+          modified: 1748136858547
+          isPrivate: false
+          description: ""
+          sortKey: -1747953336158.875
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome": "Luan Tavares",
+            	"esta_ativo": false
+            }
+        parameters:
+          - name: limit
+            value: "10"
+            disabled: false
+            id: pair_f5a7897d98e5480baad928e8072bddc5
+          - name: offset
+            value: "0"
+            disabled: false
+            id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/colaboradores/3
+        name: Obter um
+        meta:
+          id: req_7f18d39b9b81432f97d73c2c77d067bf
+          created: 1748136784587
+          modified: 1748738774925
+          isPrivate: false
+          description: ""
+          sortKey: -1747999795773.625
+        method: GET
+        parameters:
+          - name: limit
+            value: "10"
+            disabled: false
+            id: pair_f5a7897d98e5480baad928e8072bddc5
+          - name: offset
+            value: "0"
+            disabled: false
+            id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/colaboradores/7
+        name: Excluir
+        meta:
+          id: req_d911d6a76c9b4581959bfec8cce28941
+          created: 1748136842963
+          modified: 1748867316481
+          isPrivate: false
+          description: ""
+          sortKey: -1747953336058.875
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: none
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Todos
+    meta:
+      id: fld_78b435b9800841f6a91d2d1724c3243c
+      created: 1748024643688
+      modified: 1748137666133
+      sortKey: -1747999613893.875
+      description: ""
+    children:
+      - url: http://localhost:8080/api/todos
+        name: Listar
+        meta:
+          id: req_1668282f7ede453f9a9dcdd9cc8b5227
+          created: 1748024643689
+          modified: 1749428789826
+          isPrivate: false
+          description: ""
+          sortKey: -1748023025581
+        method: GET
+        parameters:
+          - name: limit
+            value: "100"
+            disabled: false
+            id: pair_f5a7897d98e5480baad928e8072bddc5
+          - name: offset
+            value: "0"
+            disabled: false
+            id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+          - id: pair_342c2a9781bb4e098dc3c4b1d97e3588
+            name: orderBy
+            value: updated_at,desc
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
           token: "{{ _.token }}"
         scripts:
           preRequest: ""
@@ -51,12 +245,458 @@ collection:
             send: true
             store: true
           rebuildPath: true
+      - url: http://localhost:8080/api/todos
+        name: Inserir
+        meta:
+          id: req_068c4c3053434fe5854e95de416451fb
+          created: 1748026995087
+          modified: 1748136966708
+          isPrivate: false
+          description: ""
+          sortKey: -1747930106351.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"title": "Tarefa x",
+            	"id_colaborador": 3
+            }
+        parameters:
+          - name: limit
+            value: "10"
+            disabled: false
+            id: pair_f5a7897d98e5480baad928e8072bddc5
+          - name: offset
+            value: "0"
+            disabled: false
+            id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/todos/1
+        name: Atualizar
+        meta:
+          id: req_4003f5a8672f4be3a03d61415e9b119c
+          created: 1748137270883
+          modified: 1748644806809
+          isPrivate: false
+          description: ""
+          sortKey: -1747883646736.75
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"title": "Tarefa xxx",
+            	"is_checked": true
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/todos/3
+        name: Obter 1
+        meta:
+          id: req_3c5e54f92dd742c69d5c6f9421495c29
+          created: 1748137436603
+          modified: 1748137497008
+          isPrivate: false
+          description: ""
+          sortKey: -1748022922233
+        method: GET
+        parameters:
+          - name: limit
+            value: "100"
+            disabled: false
+            id: pair_f5a7897d98e5480baad928e8072bddc5
+          - name: offset
+            value: "0"
+            disabled: false
+            id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/todos/3
+        name: Excluir
+        meta:
+          id: req_d2abc4de93fc45be929a6e972bbc0692
+          created: 1748137600593
+          modified: 1748137610479
+          isPrivate: false
+          description: ""
+          sortKey: -1747883646636.75
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Colaboradores-Projetos
+    meta:
+      id: fld_7d531500ccf9470486ea8b98315a5e94
+      created: 1748121194676
+      modified: 1748121194676
+      sortKey: -1747976409002.75
+      description: ""
+    children:
+      - url: http://localhost:8080/api/colaboradores-projetos
+        name: Inserir Relacionamento
+        meta:
+          id: req_5d853dfe1fc847879d0059630ebab152
+          created: 1748121194677
+          modified: 1749428751993
+          isPrivate: false
+          description: ""
+          sortKey: -1748023025581
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"id_colaborador": 1,
+            	"id_projeto": 4
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/colaboradores-projetos/4/1
+        name: Excluir Relacionamento
+        meta:
+          id: req_2e52cd3fe6d5482d9b370d8007336aa4
+          created: 1748139068395
+          modified: 1749428766747
+          isPrivate: false
+          description: ""
+          sortKey: -1748022973907
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Projetos
+    meta:
+      id: fld_f248522bfa1746f5b4aa9b7485b754f3
+      created: 1748137696912
+      modified: 1748137696912
+      sortKey: -1747988011448.3125
+      description: ""
+    children:
+      - url: http://localhost:8080/api/projetos
+        name: Listar
+        meta:
+          id: req_e6ee49b5c23c419da45ac18e16532eef
+          created: 1748137696913
+          modified: 1748138250196
+          isPrivate: false
+          description: ""
+          sortKey: -1748023025581
+        method: GET
+        parameters:
+          - name: limit
+            value: "100"
+            disabled: false
+            id: pair_f5a7897d98e5480baad928e8072bddc5
+          - name: offset
+            value: "0"
+            disabled: false
+            id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/projetos/2
+        name: Atualizar
+        meta:
+          id: req_c3832724d37c461283fda8686fdd5264
+          created: 1748137696914
+          modified: 1748138592543
+          isPrivate: false
+          description: ""
+          sortKey: -1747883646736.75
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome": "Projeto com nome grande"
+            }
+        parameters:
+          - name: limit
+            value: "10"
+            disabled: false
+            id: pair_f5a7897d98e5480baad928e8072bddc5
+          - name: offset
+            value: "0"
+            disabled: false
+            id: pair_609f3717c06e4fbaa78f4d40cdbd3c56
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/projetos
+        name: Inserir
+        meta:
+          id: req_df285ce774e8431d8efde5290f03b679
+          created: 1748137696914
+          modified: 1748138435084
+          isPrivate: false
+          description: ""
+          sortKey: -1747930106351.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome": "O Projeto"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/projetos/4
+        name: Excluir
+        meta:
+          id: req_5de69aa826c24dc8b5210fc5cea8f085
+          created: 1748137696915
+          modified: 1748138616985
+          isPrivate: false
+          description: ""
+          sortKey: -1747883646636.75
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/projetos/4
+        name: Obter 1
+        meta:
+          id: req_ad4fbcf3511c447e970ef533a90b3e57
+          created: 1748137696915
+          modified: 1748138522838
+          isPrivate: false
+          description: ""
+          sortKey: -1748022922233
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Users
+    meta:
+      id: fld_570b1334747d4fd0a43133e412e3f27d
+      created: 1748826163534
+      modified: 1748826163534
+      sortKey: -1747906794329.375
+      description: ""
+    children:
+      - url: http://localhost:8080/api/users/image
+        name: Enviar foto
+        meta:
+          id: req_6508122787bf4fdeb473f46138c02164
+          created: 1748826163538
+          modified: 1749428733832
+          isPrivate: false
+          description: ""
+          sortKey: -1748023025581
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_3896d0e43cbd46edb94f8054b9d356b5
+              name: image
+              value: ""
+              description: ""
+              disabled: false
+              type: file
+              fileName: /home/luan/Pictures/Screenshots/Screenshot from 2025-05-29
+                16-06-23.png
+        parameters:
+          - id: pair_298c21de587f4e2687872608ecaee52a
+            name: ""
+            value: ""
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - url: http://localhost:8080/env
+    name: env
+    meta:
+      id: req_98328b649959403d849b06a4d7f383f8
+      created: 1747957175536
+      modified: 1749428423689
+      isPrivate: false
+      description: ""
+      sortKey: -1748022818885
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.1.0
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    scripts:
+      preRequest: ""
+      afterResponse: ""
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
   - url: http://localhost:8080/
     name: Home
     meta:
-      id: req_3ae6ceee9c7e44b1961a2f4565d1b0ad
-      created: 1749474063012
-      modified: 1749474063012
+      id: req_bb4c8c9cc805471a9acd028666380bfe
+      created: 1747958625462
+      modified: 1748139809708
       isPrivate: false
       description: ""
       sortKey: -1748022818835
@@ -75,12 +715,36 @@ collection:
         send: true
         store: true
       rebuildPath: true
+  - url: http://localhost:8080/date
+    name: date
+    meta:
+      id: req_477be79d7ad64c2fbd7cf472c627a760
+      created: 1748189834658
+      modified: 1748189837954
+      isPrivate: false
+      description: ""
+      sortKey: -1748022818860
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.1.0
+    scripts:
+      preRequest: ""
+      afterResponse: ""
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
   - url: http://localhost:8080/login
     name: Login
     meta:
-      id: req_793229f012cd4aba96d83f8c9eac2f0e
-      created: 1749474063013
-      modified: 1749474888144
+      id: req_46883bc333d54c63b609230854fb298f
+      created: 1748819186801
+      modified: 1749428479084
       isPrivate: false
       description: ""
       sortKey: -1748022818810
@@ -89,7 +753,7 @@ collection:
       mimeType: application/x-www-form-urlencoded
       params:
         - name: email
-          value: user1@example.com
+          value: user2@example.com
           id: pair_d879a0f81afa41ddaa4b619f1c9e7265
         - id: pair_40957dead79b46d9afa038f3b6794e68
           name: senha
@@ -123,15 +787,15 @@ collection:
 cookieJar:
   name: Default Jar
   meta:
-    id: jar_4932fe46c333409ba383797683e7984c
-    created: 1749474063004
-    modified: 1749474889121
+    id: jar_85433cac38bb491db4757d48745b0c8a
+    created: 1746921355374
+    modified: 1749428590386
 environments:
   name: Base Environment
   meta:
-    id: env_2251675c045943999ffa4c6c01c6af94
-    created: 1749474063004
-    modified: 1749474889122
+    id: env_d15f91b9ae2045d888f2d5b49d48a45a
+    created: 1746921355373
+    modified: 1749428590388
     isPrivate: false
   data:
-    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsIm5vbWUiOiJVc2VyMSIsImlhdCI6MTc0OTQ3NDg4OSwiZXhwIjoxNzQ5NDc1NDg5fQ.DFYMFANmvheV1g7vFtmF4_pg3Xz7G1RVwXWOVkAUiTw
+    token: e

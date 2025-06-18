@@ -21,5 +21,8 @@ export default {
 
             tick();
         });
+    },
+    getTime: () => {
+        return new Date().toLocaleTimeString('pt-BR', { hour12: false })
     }
 };

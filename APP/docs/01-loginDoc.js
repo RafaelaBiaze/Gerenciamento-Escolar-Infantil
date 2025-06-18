@@ -14,7 +14,7 @@ export default {
                                 "email": {
                                     "type": "string",
                                     "description": "E-mail do usuário",
-                                    "example": "user1@example.com"
+                                    "example": "user@example.com"
                                 },
                                 "senha": {
                                     "type": "string",

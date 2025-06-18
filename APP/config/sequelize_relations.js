@@ -1,21 +1,44 @@
-import AlunoMateriaModel from '../app/Models/AlunoMateriaModel.js';
-import AlunoModel from '../app/Models/AlunoModel.js';
-import MateriaModel from '../app/Models/MateriaModel.js';
+import ColaboradorModel from '../app/Models/ColaboradorModel.js';
+import ColaboradorProjetoModel from '../app/Models/ColaboradorProjetoModel.js';
+import ProjetoModel from '../app/Models/ProjetoModel.js';
+import RoleModel from '../app/Models/RoleModel.js';
+import TodoModel from '../app/Models/TodoModel.js';
+import UserModel from '../app/Models/UserModel.js';
 
 export default () => {
 
-    AlunoModel.belongsToMany(MateriaModel, {
-        through: AlunoMateriaModel,
-        foreignKey: 'id_aluno',
-        otherKey: "id_materia",
-        as: 'materias'
+    ColaboradorModel.hasMany(TodoModel, {
+        foreignKey: 'id_colaborador',
+        as: 'todos'
     });
 
-    MateriaModel.belongsToMany(AlunoModel, {
-        through: AlunoMateriaModel,
-        foreignKey: 'id_materia',
-        otherKey: "id_aluno",
-        as: 'alunos'
+    TodoModel.belongsTo(ColaboradorModel, {
+        foreignKey: 'id_colaborador',
+        as: 'colaborador'
+    });
+
+    ColaboradorModel.belongsToMany(ProjetoModel, {
+        through: ColaboradorProjetoModel,
+        foreignKey: 'id_colaborador',
+        otherKey: 'id_projeto',
+        as: 'projetos'
+    });
+
+    ProjetoModel.belongsToMany(ColaboradorModel, {
+        through: ColaboradorProjetoModel,
+        foreignKey: 'id_projeto',
+        otherKey: 'id_colaborador',
+        as: 'colaboradores'
+    });
+
+    UserModel.belongsTo(RoleModel, {
+        foreignKey: "id_role",
+        as: "role"
+    });
+
+    RoleModel.hasMany(UserModel, {
+        foreignKey: "id_role",
+        as: "users"
     });
 
 }
