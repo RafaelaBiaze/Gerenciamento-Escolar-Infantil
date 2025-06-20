@@ -1,28 +1,19 @@
 # Projeto de Sistema de Gerenciamento Escolar Infantil
-Este projeto consiste no desenvolvimento de um sistema de gerenciamento completo para a Escola Infantil UniFAAT-ADS. O objetivo principal é automatizar e otimizar o controle de pagamentos, presenças e atividades dos alunos, substituindo o método manual atual baseado em cadernos.
+
+## 📑 Sumário
+
+- [Instalação e Execução](#instalacao-e-execucao)
+- [Detalhe de acesso](#acesso)
+- [Como Criar Elementos](#como-criar-elementos)
+  - [🧩 Criar uma Rota](#criar-uma-rota)
+  - [📦 Criar um Controller](#criar-um-controller)
+  - [⛓️ Criar um Middleware](#criar-um-middleware)
+
+
 
 ---
 
-## Principais Funcionalidades
-* Módulo de Pagamentos: Permite o registro, acompanhamento e geração de relatórios de mensalidades e outras taxas escolares.
-* Módulo de Presenças: Facilita o registro e acompanhamento da frequência dos alunos, com possibilidade de geração de relatórios.
-* Módulo de Atividades: Permite o cadastro, organização e visualização das atividades pedagógicas realizadas com os alunos.
-* Autenticação Segura: Sistema de login e senha com tokens JWT e senhas criptografadas para garantir a segurança dos dados.
-* API Documentada: A API do sistema é documentada com Swagger, facilitando o teste e a integração.
-
----
-
-## Principais tecnologias utilizadas
-> O projeto é construído com as seguintes tecnologias:
-* **Backend:** Node.js, Express.js
-* **Banco de Dados:** PostgreSQL com Sequelize ORM
-* **Autenticação:** JSON Web Tokens (jsonwebtoken) e bcrypt
-* **Documentação da API:** swagger-jsdoc e swagger-ui-express
-* **Linguagem:** Javascript
-
----
-
-## Instalação e Execução
+## Instalação e Execução <a name="instalacao-e-execucao"></a>
 ### Siga os passos abaixo para rodar o projeto via Docker:
 
 1. Clonar o repositório:
@@ -61,12 +52,21 @@ Este projeto consiste no desenvolvimento de um sistema de gerenciamento completo
    > Este é apenas um exemplo para o funcionamento da aplicação, mudar as credenciais abaixo não irá afetar em nada.
 
     ```sh
-    POSTGRES_USER=meu_usuario
-    POSTGRES_PASSWORD=minha_senha
-    JWT_SECRET=super_secreta
-    ```
+   POSTGRES_USER=meu_usuario
+   POSTGRES_PASSWORD=minha_senha
+   RABBITMQ_USER=meu_usuario
+   RABBITMQ_PASSWORD=minha_senha
+   JWT_SECRET=super_secreta
+   ```
 
-6. Subir a aplicação com Docker Compose:
+6. Instalar as dependências:
+
+   ```sh
+   npm install
+   ```
+
+
+7. Subir a aplicação com Docker Compose:
 
    ```sh
    docker-compose up --build
@@ -78,9 +78,49 @@ Este projeto consiste no desenvolvimento de um sistema de gerenciamento completo
    docker compose up --build
    ```
 
+8. Executar as migrations utilizando UM desses comandos:
+
+   > Container (Docker Compose tradicional):
+
+   ```sh
+   docker-compose run --rm nodecli-container migrate
+   ```
+
+   > Container (Docker Compose moderno):
+
+   ```sh
+   docker compose run --rm nodecli-container migrate
+   ```
+
+   > Host:
+
+   ```sh
+   node command migrate
+   ```
+
+9. Executar as seeds utilizando UM desses comandos:
+
+   > Container (Docker Compose tradicional):
+
+   ```sh
+   docker-compose run --rm nodecli-container seed
+   ```
+
+   > Container (Docker Compose moderno):
+
+   ```sh
+   docker compose run --rm nodecli-container seed
+   ```
+
+   > Host:
+
+   ```sh
+   node command seed
+   ```
+
 ---
 
-## Detalhes
+## Detalhe de acesso <a name="acesso"></a>
 
 O servidor estará disponível em: [http://localhost:8080](http://localhost:8080)
 
@@ -89,3 +129,41 @@ Documentação api: [http://localhost:8080/docs](http://localhost:8080/docs)
 Observação: ./Insomnia.yml deve-se utilizar no Insomnia
 
 > Pasta `Docs` fora da aplicação, é somente para arquivos de documentação do banco de dados, como MER e DER.
+
+---
+
+## Como Criar Elementos <a name="como-criar-elementos"></a>
+
+### Criar uma Rota <a name="criar-uma-rota"></a>
+
+1. Defina o path da rota em `routes/web.js` ou `routes/api.js`
+2. Associe um controller da `app/Http/Controllers/`
+
+Exemplo (`routes/api.js`):
+```js
+router.get('/exemplo', MeuController);
+```
+
+### Criar um Controller <a name="criar-um-controller"></a>
+
+1. Crie um novo arquivo em `app/Http/Controllers/...`
+
+```js
+export default async function(request, response) {
+  ...
+  # Minha Lógica
+  ...
+  response.status(200).json({"success": "Minha resposta"});
+}
+```
+
+### ⛓️ Criar um Middleware <a name="criar-um-middleware"></a>
+
+Adicione em `app/Http/Middlewares/`, por exemplo:
+
+```js
+export default async function (request, response, next) {
+  console.log(`[${request.method}] ${request.url}`);
+  next();
+}
+```
