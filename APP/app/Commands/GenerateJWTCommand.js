@@ -30,14 +30,14 @@ export default {
 
         const payload = {
             id: userModel.id,
+            login: userModel.login,
             email: userModel.email,
-            nome: userModel.nome,
             role: userModel.role.nome
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: expires ?? "15m" });
 
-        console.log(`Usuário: ${userModel.nome}`);
+        console.log(`Usuário: ${userModel.login}`);
         console.log(`Token: ${token}`);
     }
 }

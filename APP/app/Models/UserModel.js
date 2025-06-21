@@ -12,19 +12,15 @@ export default (function () {
                 primaryKey: true,
                 allowNull: false
             },
-            nome: {
+            login: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                unique: true
             },
             email: {
                 type: DataTypes.STRING,
                 allowNull: false,
                 unique: true
-            },
-            foto: {
-                type: DataTypes.STRING,
-                allowNull: true,
-                allowNull: true
             },
             senha: {
                 type: DataTypes.STRING,

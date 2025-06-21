@@ -1,0 +1,11 @@
+import db from '../../config/db.js';
+
+async function up() {
+  /** Codar **/
+}
+
+async function down() {
+  /** Codar **/
+}
+
+export default { up, down };

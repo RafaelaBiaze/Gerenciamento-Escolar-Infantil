@@ -5,6 +5,7 @@ import UserModel from '../../Models/UserModel.js';
 //POST /login
 export default async (request, response) => {
 
+    const login = request.body.login;
     const email = request.body.email;
     const senha = request.body.senha;
 
@@ -38,8 +39,8 @@ export default async (request, response) => {
         // 3. Gerar JWT
         const payload = {
             id: userModel.id,
+            login: userModel.login,
             email: userModel.email,
-            nome: userModel.nome,
             role: userModel.role.nome
         };
 
