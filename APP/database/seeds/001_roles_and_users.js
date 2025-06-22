@@ -7,9 +7,9 @@ export default {
 
     up: async () => {
         const rows = await RoleModel.bulkCreate([
-            { nome: 'Role_Admin' },
-            { nome: 'Role_Professor' },
-            { nome: 'Role_Responsavel' }
+            { nome: 'Role_Admin' }, // 0
+            { nome: 'Role_Professor' }, // 1
+            { nome: 'Role_Responsavel' } // 2
         ]);
 
         const senha = "123456";
