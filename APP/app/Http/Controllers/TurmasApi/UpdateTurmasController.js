@@ -1,4 +1,4 @@
-import ProfessorModel from "../../../Models/ProfessorModel.js";
+import TurmaModel from "../../../Models/TurmaModel.js";
 
 export default async (request, response) => {
 
@@ -8,22 +8,27 @@ export default async (request, response) => {
 
     const requestBody = request.body;
 
-    const nome = requestBody.nome;
-    const cpf = requestBody.cpf;
-    const telefone = requestBody.telefone;
+    const professor = requestBody.professor;
+    const sala = requestBody.sala;
+    const periodo = requestBody.periodo;
+    const ano = requestBody.ano;
 
     const data = {};
 
-    if (nome !== undefined) {
-        data["nome"] = nome;
+    if (professor !== undefined) {
+        data["professor"] = professor;
     }
 
-    if (cpf !== undefined) {
-        data["cpf"] = cpf;
+    if (sala !== undefined) {
+        data["sala"] = sala;
     }
 
-    if (telefone !== undefined) {
-        data["telefone"] = telefone;
+    if (periodo !== undefined) {
+        data["periodo"] = periodo;
+    }
+
+    if (ano !== undefined) {
+        data["ano"] = ano;
     }
 
     // Object.keys({a:1, b:2, c:3}) = [a,b,c]
@@ -37,11 +42,12 @@ export default async (request, response) => {
 
     try {
 
-        const [rowsAffected, [row]] = await ProfessorModel.update(
+        const [rowsAffected, [row]] = await TurmaModel.update(
             {
-                nome_professor: nome,
-                cpf_professor: cpf,
-                telefone_professor: telefone
+                id_professor: professor,
+                sala: sala,
+                periodo: periodo,
+                ano: ano
             },
             {
                 where: {
@@ -53,7 +59,7 @@ export default async (request, response) => {
 
         if (rowsAffected === 0 || !row) {
             return response.status(HTTP_STATUS.NOT_FOUND).json({
-                error: `Nenhum professor encontrado com ID ${id}`
+                error: `Nenhum turma encontrado com ID ${id}`
             });
         }
 

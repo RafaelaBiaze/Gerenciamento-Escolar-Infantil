@@ -1,5 +1,5 @@
-import ProfessorModel from "../../../Models/ProfessorModel.js"
-import UserModel from "../../../Models/UserModel.js"
+import AlunoModel from "../../../Models/AlunoModel.js";
+import TurmaModel from "../../../Models/TurmaModel.js";
 
 export default async (request, response) => {
 
@@ -35,15 +35,15 @@ export default async (request, response) => {
 
     try {
 
-        const data = await ProfessorModel.findAll({
+        const data = await AlunoModel.findAll({
             limit: limit + 1,
             offset: offset,
             order: [[field, direction]],
             include: [
                 {
-                    model: UserModel,
-                    as: "user",
-                    attributes: ['login', 'email']
+                    model: TurmaModel,
+                    as: "turma",
+                    attributes: ['sala', 'periodo', 'ano']
                 }
             ]
         });

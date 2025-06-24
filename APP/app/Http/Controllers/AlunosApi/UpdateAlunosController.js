@@ -1,4 +1,4 @@
-import ProfessorModel from "../../../Models/ProfessorModel.js";
+import AlunoModel from "../../../Models/AlunoModel.js";
 
 export default async (request, response) => {
 
@@ -8,22 +8,27 @@ export default async (request, response) => {
 
     const requestBody = request.body;
 
+    const turma = requestBody.turma;
     const nome = requestBody.nome;
-    const cpf = requestBody.cpf;
-    const telefone = requestBody.telefone;
+    const registro = requestBody.registro_aluno;
+    const data_nascimento = requestBody.data_nascimento;
 
     const data = {};
+
+    if (turma !== undefined) {
+        data["turma"] = turma;
+    }
 
     if (nome !== undefined) {
         data["nome"] = nome;
     }
 
-    if (cpf !== undefined) {
-        data["cpf"] = cpf;
+    if (registro !== undefined) {
+        data["registro"] = registro;
     }
 
-    if (telefone !== undefined) {
-        data["telefone"] = telefone;
+    if (data_nascimento !== undefined) {
+        data["data_nascimento"] = data_nascimento;
     }
 
     // Object.keys({a:1, b:2, c:3}) = [a,b,c]
@@ -37,11 +42,12 @@ export default async (request, response) => {
 
     try {
 
-        const [rowsAffected, [row]] = await ProfessorModel.update(
+        const [rowsAffected, [row]] = await AlunoModel.update(
             {
-                nome_professor: nome,
-                cpf_professor: cpf,
-                telefone_professor: telefone
+                id_turma: turma,
+                registro_aluno: registro,
+                nome_aluno: nome,
+                data_nascimento_aluno: data_nascimento
             },
             {
                 where: {
@@ -53,7 +59,7 @@ export default async (request, response) => {
 
         if (rowsAffected === 0 || !row) {
             return response.status(HTTP_STATUS.NOT_FOUND).json({
-                error: `Nenhum professor encontrado com ID ${id}`
+                error: `Nenhum aluno encontrado com ID ${id}`
             });
         }
 

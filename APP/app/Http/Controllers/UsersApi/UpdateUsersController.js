@@ -1,4 +1,5 @@
-import ProfessorModel from "../../../Models/ProfessorModel.js";
+import UserModel from "../../../Models/UserModel.js";
+import bcrypt from 'bcrypt';
 
 export default async (request, response) => {
 
@@ -8,22 +9,27 @@ export default async (request, response) => {
 
     const requestBody = request.body;
 
-    const nome = requestBody.nome;
-    const cpf = requestBody.cpf;
-    const telefone = requestBody.telefone;
+    const login = requestBody.login;
+    const email = requestBody.email;
+    const senha = requestBody.senha;
+    const role = requestBody.role;
 
     const data = {};
 
-    if (nome !== undefined) {
-        data["nome"] = nome;
+    if (login !== undefined) {
+        data["login"] = login;
     }
 
-    if (cpf !== undefined) {
-        data["cpf"] = cpf;
+    if (email !== undefined) {
+        data["email"] = email;
     }
 
-    if (telefone !== undefined) {
-        data["telefone"] = telefone;
+    if (senha !== undefined) {
+        data["senha"] = senha;
+    }
+
+    if (role !== undefined) {
+        data["role"] = role;
     }
 
     // Object.keys({a:1, b:2, c:3}) = [a,b,c]
@@ -37,11 +43,14 @@ export default async (request, response) => {
 
     try {
 
-        const [rowsAffected, [row]] = await ProfessorModel.update(
+        const hashedPassword = await bcrypt.hash(String(senha), 10);
+
+        const [rowsAffected, [row]] = await UserModel.update(
             {
-                nome_professor: nome,
-                cpf_professor: cpf,
-                telefone_professor: telefone
+                login: login,
+                email: email,
+                senha: hashedPassword,
+                id_role: role
             },
             {
                 where: {
@@ -53,7 +62,7 @@ export default async (request, response) => {
 
         if (rowsAffected === 0 || !row) {
             return response.status(HTTP_STATUS.NOT_FOUND).json({
-                error: `Nenhum professor encontrado com ID ${id}`
+                error: `Nenhum user encontrado com ID ${id}`
             });
         }
 

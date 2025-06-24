@@ -1,4 +1,4 @@
-import ProfessorModel from "../../../Models/ProfessorModel.js";
+import AtividadeModel from "../../../Models/AtividadeModel.js";
 
 export default async (request, response) => {
 
@@ -8,22 +8,32 @@ export default async (request, response) => {
 
     const requestBody = request.body;
 
+    const turma = requestBody.turma;
+    const professor = requestBody.professor;
     const nome = requestBody.nome;
-    const cpf = requestBody.cpf;
-    const telefone = requestBody.telefone;
+    const descricao = requestBody.descricao;
+    const data_atividade = requestBody.data;
 
     const data = {};
+
+    if (turma !== undefined) {
+        data["turma"] = turma;
+    }
+
+    if (professor !== undefined) {
+        data["professor"] = professor;
+    }
 
     if (nome !== undefined) {
         data["nome"] = nome;
     }
 
-    if (cpf !== undefined) {
-        data["cpf"] = cpf;
+    if (descricao !== undefined) {
+        data["descricao"] = descricao;
     }
 
-    if (telefone !== undefined) {
-        data["telefone"] = telefone;
+    if (data_atividade !== undefined) {
+        data["data_atividade"] = data_atividade;
     }
 
     // Object.keys({a:1, b:2, c:3}) = [a,b,c]
@@ -37,11 +47,13 @@ export default async (request, response) => {
 
     try {
 
-        const [rowsAffected, [row]] = await ProfessorModel.update(
+        const [rowsAffected, [row]] = await AtividadeModel.update(
             {
-                nome_professor: nome,
-                cpf_professor: cpf,
-                telefone_professor: telefone
+                id_turma: turma,
+                id_professor: professor,
+                nome_atividade: nome,
+                descricao_atividade: descricao,
+                data_atividade: data_atividade
             },
             {
                 where: {
@@ -53,7 +65,7 @@ export default async (request, response) => {
 
         if (rowsAffected === 0 || !row) {
             return response.status(HTTP_STATUS.NOT_FOUND).json({
-                error: `Nenhum professor encontrado com ID ${id}`
+                error: `Nenhum atividade encontrado com ID ${id}`
             });
         }
 

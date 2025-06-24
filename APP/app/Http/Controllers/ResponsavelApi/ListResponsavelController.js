@@ -1,4 +1,4 @@
-import ProfessorModel from "../../../Models/ProfessorModel.js"
+import ResponsavelModel from "../../../Models/ResponsavelModel.js";
 import UserModel from "../../../Models/UserModel.js"
 
 export default async (request, response) => {
@@ -35,7 +35,7 @@ export default async (request, response) => {
 
     try {
 
-        const data = await ProfessorModel.findAll({
+        const data = await ResponsavelModel.findAll({
             limit: limit + 1,
             offset: offset,
             order: [[field, direction]],

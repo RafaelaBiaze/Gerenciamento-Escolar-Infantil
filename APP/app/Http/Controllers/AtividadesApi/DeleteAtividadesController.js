@@ -1,4 +1,4 @@
-import ProfessorModel from "../../../Models/ProfessorModel.js";
+import AtividadeModel from "../../../Models/AtividadeModel.js";
 
 export default async (request, response) => {
 
@@ -8,14 +8,14 @@ export default async (request, response) => {
 
     try {
 
-        const rowsDeleted = await ProfessorModel.destroy({
+        const rowsDeleted = await AtividadeModel.destroy({
             where: {
                 id: id
             }
         });
 
         if (rowsDeleted === 0) {
-            return response.status(HTTP_STATUS.NOT_FOUND).json({ error: `Professor com id ${id} não existe!` });
+            return response.status(HTTP_STATUS.NOT_FOUND).json({ error: `Atividade com id ${id} não existe!` });
         }
 
         return response.status(HTTP_STATUS.SUCCESS_NO_CONTENT).send();

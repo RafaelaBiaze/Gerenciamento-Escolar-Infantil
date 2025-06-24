@@ -10,7 +10,7 @@ export default async (request, response) => {
     const senha = request.body.senha;
 
     const JWT_SECRET = process.env.JWT_SECRET;
-    const JWT_EXPIRES_IN = '10m';
+    const JWT_EXPIRES_IN = '15m';
 
     try {
         // Aqui iremos buscar

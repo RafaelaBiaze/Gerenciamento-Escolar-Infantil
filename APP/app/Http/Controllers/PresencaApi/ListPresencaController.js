@@ -1,5 +1,5 @@
-import ProfessorModel from "../../../Models/ProfessorModel.js"
-import UserModel from "../../../Models/UserModel.js"
+import AlunoModel from "../../../Models/AlunoModel.js";
+import PresencaModel from "../../../Models/PresencaModel.js";
 
 export default async (request, response) => {
 
@@ -35,15 +35,15 @@ export default async (request, response) => {
 
     try {
 
-        const data = await ProfessorModel.findAll({
+        const data = await PresencaModel.findAll({
             limit: limit + 1,
             offset: offset,
             order: [[field, direction]],
             include: [
                 {
-                    model: UserModel,
-                    as: "user",
-                    attributes: ['login', 'email']
+                    model: AlunoModel,
+                    as: "aluno",
+                    attributes: ['nome_aluno', 'registro_aluno']
                 }
             ]
         });

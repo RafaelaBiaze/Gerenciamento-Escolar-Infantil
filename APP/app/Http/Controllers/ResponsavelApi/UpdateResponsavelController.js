@@ -1,4 +1,4 @@
-import ProfessorModel from "../../../Models/ProfessorModel.js";
+import ResponsavelModel from "../../../Models/ResponsavelModel.js";
 
 export default async (request, response) => {
 
@@ -37,11 +37,11 @@ export default async (request, response) => {
 
     try {
 
-        const [rowsAffected, [row]] = await ProfessorModel.update(
+        const [rowsAffected, [row]] = await ResponsavelModel.update(
             {
-                nome_professor: nome,
-                cpf_professor: cpf,
-                telefone_professor: telefone
+                nome_responsavel: nome,
+                cpf_responsavel: cpf,
+                telefone_responsavel: telefone
             },
             {
                 where: {
@@ -53,7 +53,7 @@ export default async (request, response) => {
 
         if (rowsAffected === 0 || !row) {
             return response.status(HTTP_STATUS.NOT_FOUND).json({
-                error: `Nenhum professor encontrado com ID ${id}`
+                error: `Nenhum responsavel encontrado com ID ${id}`
             });
         }
 
