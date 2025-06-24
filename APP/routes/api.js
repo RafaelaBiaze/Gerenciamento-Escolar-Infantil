@@ -25,6 +25,9 @@ export default (function () {
     //Users
     router.use("/", usersApi);
 
+    //Professores api routes
+    router.use("/", professoresApi);
+
     return router;
 
 })();
