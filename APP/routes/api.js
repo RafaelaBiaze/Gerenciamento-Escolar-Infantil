@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import { isAbsolute } from 'path';
+import isAdmin from '../app/Http/Middlewares/isAdmin.js';
 import colaboradoresApi from './api/colaboradoresApi.js';
 import todosApi from './api/todosApi.js';
 import colaboradoresProjetosApi from './api/colaboradoresProjetosApi.js';
@@ -26,7 +28,7 @@ export default (function () {
     router.use("/", usersApi);
 
     //Professores api routes
-    router.use("/", professoresApi);
+    router.use("/", isAdmin, professoresApi);
 
     return router;
 
