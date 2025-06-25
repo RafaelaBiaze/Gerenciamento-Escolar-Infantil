@@ -18,13 +18,15 @@ export default {
             { login: 'User1', email: 'user1@example.com', id_role: rows[0].id, senha: await bcrypt.hash(senha, 10) },
             { login: 'User2', email: 'user2@example.com', id_role: rows[1].id, senha: await bcrypt.hash(senha, 10) },
             { login: 'User3', email: 'user3@example.com', id_role: rows[2].id, senha: await bcrypt.hash(senha, 10) },
+            { login: 'User4', email: 'user4@example.com', id_role: rows[1].id, senha: await bcrypt.hash(senha, 10) },
+            { login: 'User5', email: 'user5@example.com', id_role: rows[2].id, senha: await bcrypt.hash(senha, 10) },
         ])
     },
 
     down: async () => {
         await UserModel.destroy({
             where: {
-                email: ['user1@example.com', 'user2@example.com', 'user3@example.com']
+                email: ['user1@example.com', 'user2@example.com', 'user3@example.com', 'user4@example.com', 'user5@example.com']
             }
         });
 

@@ -6,6 +6,7 @@ export default async (request, response) => {
 
     const requestBody = request.body;
 
+    const user = requestBody.user || null;
     const nome = requestBody.nome || null;
     const cpf = requestBody.cpf || null;
     const telefone = requestBody.telefone || null;
@@ -17,6 +18,7 @@ export default async (request, response) => {
     try {
 
         const row = await ProfessorModel.create({
+            id_user: user,
             nome_professor: nome,
             cpf_professor: cpf,
             telefone_professor: telefone

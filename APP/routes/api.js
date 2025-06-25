@@ -1,6 +1,5 @@
 import { Router } from 'express';
 
-import { isAbsolute } from 'path';
 import isAdmin from '../app/Http/Middlewares/isAdmin.js';
 import colaboradoresApi from './api/colaboradoresApi.js';
 import todosApi from './api/todosApi.js';
@@ -13,7 +12,6 @@ import turmasApi from './api/turmasApi.js';
 import alunosApi from './api/alunosApi.js';
 import atividadesApi from './api/atividadesApi.js';
 import presencaApi from './api/presencaApi.js';
-import isAdmin from '../app/Http/Middlewares/isAdmin.js';
 
 export default (function () {
 

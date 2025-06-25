@@ -8,11 +8,16 @@ export default async (request, response) => {
 
     const requestBody = request.body;
 
+    const user = requestBody.user;
     const nome = requestBody.nome;
     const cpf = requestBody.cpf;
     const telefone = requestBody.telefone;
 
     const data = {};
+
+    if (user !== undefined) {
+        data["user"] = user;
+    }
 
     if (nome !== undefined) {
         data["nome"] = nome;
@@ -38,7 +43,8 @@ export default async (request, response) => {
     try {
 
         const [rowsAffected, [row]] = await ResponsavelModel.update(
-            {
+            {   
+                id_user: user,
                 nome_responsavel: nome,
                 cpf_responsavel: cpf,
                 telefone_responsavel: telefone

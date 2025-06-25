@@ -8,11 +8,18 @@ export default async (request, response) => {
 
     const requestBody = request.body;
 
+    const user = requestBody.user;
     const nome = requestBody.nome;
     const cpf = requestBody.cpf;
     const telefone = requestBody.telefone;
 
+    console.log(user);
+
     const data = {};
+
+    if (user !== undefined) {
+        data["user"] = user;
+    }
 
     if (nome !== undefined) {
         data["nome"] = nome;
@@ -39,6 +46,7 @@ export default async (request, response) => {
 
         const [rowsAffected, [row]] = await ProfessorModel.update(
             {
+                id_user: user,
                 nome_professor: nome,
                 cpf_professor: cpf,
                 telefone_professor: telefone
