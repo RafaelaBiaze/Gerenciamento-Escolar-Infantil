@@ -1358,9 +1358,11 @@ collection:
           mimeType: application/json
           text: |-
             {
+            	"turma": 1,
+            	"professor": 2,
             	"nome": "Ana Beatriz da Silva",
-            	"cpf": "11122233445",
-            	"telefone": "11911112222"
+            	"descricao": "Desenho livre",
+            	"data": "2025-02-01"
             }
         parameters:
           - id: pair_34679a27b52d4f54ab11610ea53eddca
@@ -1468,9 +1470,11 @@ collection:
           mimeType: application/json
           text: |-
             {
+            	"turma": 1,
+            	"professor": 2,
             	"nome": "Ana Beatriz da Silva",
-            	"cpf": "11122233344",
-            	"telefone": "11911112222"
+            	"descricao": "Desenho livre",
+            	"data": "2025-02-01"
             }
         parameters:
           - id: pair_eae1178bfc6e46dd949100f44a817ceb
@@ -1517,9 +1521,9 @@ collection:
           mimeType: application/json
           text: |-
             {
-            	"nome": "Ana Beatriz da Silva",
-            	"cpf": "11122233445",
-            	"telefone": "11911112222"
+            	"aluno": 2,
+            	"data": "2025-02-01",
+            	"comparecimento": true
             }
         parameters:
           - id: pair_34679a27b52d4f54ab11610ea53eddca
@@ -1619,9 +1623,9 @@ collection:
           mimeType: application/json
           text: |-
             {
-            	"nome": "Ana Beatriz da Silva",
-            	"cpf": "11122233344",
-            	"telefone": "11911112222"
+            	"aluno": 2,
+            	"data": "2025-02-01",
+            	"comparecimento": true
             }
         parameters:
           - id: pair_eae1178bfc6e46dd949100f44a817ceb
