@@ -131,4 +131,14 @@ export default () => {
         foreignKey: 'id_turma',
         as: 'atividades'
     })
+
+    AlunoResponsavelModel.belongsTo(AlunoModel, {
+        foreignKey: 'id_aluno',
+        as: 'aluno' 
+    });
+
+    AlunoResponsavelModel.belongsTo(ResponsavelModel, {
+        foreignKey: 'id_responsavel',
+        as: 'responsavel'
+    });
 }
