@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import isAdmin from '../app/Http/Middlewares/isAdmin.js';
+import isProfessor from '../app/Http/Middlewares/isProfessor.js';
 import colaboradoresApi from './api/colaboradoresApi.js';
 import todosApi from './api/todosApi.js';
 import colaboradoresProjetosApi from './api/colaboradoresProjetosApi.js';
@@ -33,22 +34,22 @@ export default (function () {
     router.use("/", usersApi);
 
     //Professores api routes
-    router.use("/", isAdmin, professoresApi);
+    router.use("/", professoresApi);
 
     //Responsavel api routes
-    router.use("/", isAdmin, responsavelApi);
+    router.use("/", responsavelApi);
 
     //Turmas api routes
-    router.use("/", isAdmin, turmasApi);
+    router.use("/", turmasApi);
 
     //Alunos api routes
-    router.use("/", isAdmin, alunosApi);
+    router.use("/", alunosApi);
 
     //Atividades api routes
-    router.use("/", isAdmin, atividadesApi);
+    router.use("/", atividadesApi);
 
     //Presença api routes
-    router.use("/", isAdmin, presencaApi);
+    router.use("/", presencaApi);
 
     return router;
 
