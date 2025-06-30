@@ -6,9 +6,7 @@ export default async (request, response) => {
     const HTTP_STATUS = CONSTANTS.HTTP;
 
     const orderBy_fields = [
-        "id",
-        "updated_at",
-        "created_at"
+        "id"
     ];
 
     const orderBy_direction = [

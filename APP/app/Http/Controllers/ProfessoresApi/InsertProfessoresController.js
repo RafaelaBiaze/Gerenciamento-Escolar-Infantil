@@ -15,7 +15,19 @@ export default async (request, response) => {
         return response.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'Todos os campos são obrigatórios.' });
     }
 
+    
+
     try {
+
+        const cpfExists = await ProfessorModel.findOne({
+            where: {
+                cpf_professor: cpf
+            }
+        });
+
+        if (cpfExists) {
+            return response.status(HTTP_STATUS.BAD_REQUEST).json({ error : 'CPF já existe!'});
+        }
 
         const row = await ProfessorModel.create({
             id_user: user,
