@@ -7,7 +7,7 @@ export default {
 
         await TurmaModel.bulkCreate([
             {
-                sala: 'Sala A1',
+                sala: 'A1',
                 periodo: 'Manhã',
                 ano: '2025',
                 id_professor: idProfessor

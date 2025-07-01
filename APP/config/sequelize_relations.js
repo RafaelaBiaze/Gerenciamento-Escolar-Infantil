@@ -3,6 +3,7 @@ import AlunoResponsavelModel from '../app/Models/AlunoResponsavelModel.js';
 import AtividadeModel from '../app/Models/AtividadeModel.js';
 import ColaboradorModel from '../app/Models/ColaboradorModel.js';
 import ColaboradorProjetoModel from '../app/Models/ColaboradorProjetoModel.js';
+import PagamentoModel from '../app/Models/PagamentoModel.js';
 import PresencaModel from '../app/Models/PresencaModel.js';
 import ProfessorModel from '../app/Models/ProfessorModel.js';
 import ProjetoModel from '../app/Models/ProjetoModel.js';
@@ -130,14 +131,24 @@ export default () => {
     TurmaModel.hasMany(AtividadeModel, {
         foreignKey: 'id_turma',
         as: 'atividades'
-    })
-
-    AlunoResponsavelModel.belongsTo(AlunoModel, {
-        foreignKey: 'id_aluno',
-        as: 'aluno' 
     });
 
-    AlunoResponsavelModel.belongsTo(ResponsavelModel, {
+    AlunoModel.hasMany(PagamentoModel, {
+        foreignKey: 'id_aluno',
+        as: 'pagamento'
+    });
+
+    PagamentoModel.belongsTo(AlunoModel, {
+        foreignKey: 'id_aluno',
+        as: 'aluno'
+    });
+
+    ResponsavelModel.hasMany(PagamentoModel, {
+        foreignKey: 'id_responsavel',
+        as: 'pagamento'
+    });
+
+    PagamentoModel.belongsTo(ResponsavelModel, {
         foreignKey: 'id_responsavel',
         as: 'responsavel'
     });

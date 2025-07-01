@@ -6,8 +6,6 @@ async function up() {
         id_aluno INTEGER NOT NULL,
         id_responsavel INTEGER NOT NULL,
 
-        UNIQUE (id_aluno, id_responsavel),
-
         CONSTRAINT fk_aluno
           FOREIGN KEY (id_aluno)
           REFERENCES alunos(id)
@@ -18,8 +16,9 @@ async function up() {
           FOREIGN KEY (id_responsavel)
           REFERENCES responsavel(id)
           ON DELETE CASCADE
-          ON UPDATE CASCADE
-          
+          ON UPDATE CASCADE,
+
+        CONSTRAINT uq_aluno_responsavel UNIQUE (id_aluno, id_responsavel)
     );
   `);
 }

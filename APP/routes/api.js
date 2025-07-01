@@ -13,6 +13,8 @@ import turmasApi from './api/turmasApi.js';
 import alunosApi from './api/alunosApi.js';
 import atividadesApi from './api/atividadesApi.js';
 import presencaApi from './api/presencaApi.js';
+import pagamentosApi from './api/pagamentosApi.js';
+import alunoResponsavel from './api/alunoResponsavelApi.js';
 
 export default (function () {
 
@@ -39,6 +41,9 @@ export default (function () {
     //Responsavel api routes
     router.use("/", responsavelApi);
 
+    //Aluno-Responsavel api routes
+    router.use("/", alunoResponsavel);
+
     //Turmas api routes
     router.use("/", turmasApi);
 
@@ -50,6 +55,9 @@ export default (function () {
 
     //Presença api routes
     router.use("/", presencaApi);
+
+    //Pagamentos api routes
+    router.use("/", pagamentosApi);
 
     return router;
 
