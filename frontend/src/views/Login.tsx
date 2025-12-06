@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import api from '../services/api';
+import api from '../services/api'; // Certifique-se que o caminho está correto
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
@@ -38,26 +38,82 @@ export default function Login() {
     };
 
     return (
-        <div style={{ padding: 20, display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-            <div style={{ width: '300px', border: '1px solid #ccc', padding: '20px', borderRadius: '8px', background: '#fff' }}>
-                <h2 style={{ textAlign: 'center' }}>Login Escolar</h2>
-                <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        // Centralização da tela
+        <div style={{
+            minHeight: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#ffffff',
+            fontFamily: "'Poppins', sans-serif"
+        }}>
+            
+            {/* Div de login */}
+            <div style={{
+                width: '100%',
+                maxWidth: '350px',
+                backgroundColor: '#ffffff',
+                padding: '40px',
+                borderRadius: '15px',
+                boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+                textAlign: 'center'
+            }}>
+                
+                <h2 style={{ 
+                    color: '#333', 
+                    marginBottom: '30px', 
+                    marginTop: 0 
+                }}>
+                    Login Escolar
+                </h2>
+                
+                <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                     <input 
+                        type="email"
                         placeholder="E-mail" 
                         value={email} 
                         onChange={e => setEmail(e.target.value)} 
-                        style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+                        style={{
+                            width: '100%',
+                            padding: '15px',
+                            borderRadius: '8px',
+                            border: '1px solid #e1e1e1',
+                            backgroundColor: '#f9f9f9',
+                            fontSize: '16px',
+                            boxSizing: 'border-box'
+                        }}
                     />
+                    
                     <input 
                         type="password" 
                         placeholder="Senha" 
                         value={senha} 
                         onChange={e => setSenha(e.target.value)} 
-                        style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+                        style={{
+                            width: '100%',
+                            padding: '15px',
+                            borderRadius: '8px',
+                            border: '1px solid #e1e1e1',
+                            backgroundColor: '#f9f9f9',
+                            fontSize: '16px',
+                            boxSizing: 'border-box'
+                        }}
                     />
+                    
                     <button 
                         type="submit"
-                        style={{ padding: '10px', background: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                        style={{
+                            width: '100%',
+                            padding: '15px',
+                            backgroundColor: '#007bff',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontSize: '18px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            marginTop: '10px'
+                        }}
                     >
                         Entrar
                     </button>
