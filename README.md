@@ -8,9 +8,9 @@ O projeto visa desenvolver um sistema de gerenciamento para a Escola Infantil Un
 > Tecnologias para a execução e visualização da aplicação, é preciso ter elas instaladas na máquina local (host).
 
 * Docker e Docker Compose (Subir e executar a aplicação)
+* Node e npm na máquina local (Necessário para executar o projeto React, gerenciar pacotes e rodar o build do Vite.)
 * (**Opcional**) Insomnia (Simulações de requisições)
 * Dbeaver ou Beekeeper (Visualização do banco PostgreSQL)
-* (**Opcional**) Node e npm na máquina local (Para a utilização do `node command` para utilizar comandos fora da rede-docker)
 
 ---
 
@@ -35,7 +35,7 @@ O projeto visa desenvolver um sistema de gerenciamento para a Escola Infantil Un
 
 ## Instalação e Execução <a name="instalacao-e-execucao"></a>
 
-### Siga os passos abaixo para rodar o projeto via Docker:
+### Siga os passos abaixo para rodar o projeto:
 
 1. Clonar o repositório:
 
@@ -48,6 +48,8 @@ O projeto visa desenvolver um sistema de gerenciamento para a Escola Infantil Un
    ```sh
    cd Gerenciamento-Escolar-Infantil
    ```
+
+### Iniciar Backend:
 
 3. Depois de entrar na pasta do projeto, troque de diretório novamente para o **APP**(Onde a aplicação realmente está):
 
@@ -138,10 +140,27 @@ O projeto visa desenvolver um sistema de gerenciamento para a Escola Infantil Un
    node command seed
    ```
 
+### Iniciar Frontend
+
+10. Entrar na pasta frontend:
+    ```sh
+    cd frontend
+    ```
+
+11. Instalar as dependências do React:
+    ```sh
+    npm install
+    ```
+
+12. Iniciar com o Vite:
+    ```sh
+    npm run dev
+    ```
 ---
 
 ## Acesse <a name="acesse"></a>
 
+- Aplicação: [http://localhost:5173](http://localhost:5173)
 - Servidor: [http://localhost:8080](http://localhost:8080)
 - Documentação da API: [http://localhost:8080/docs](http://localhost:8080/docs)
 
@@ -376,6 +395,7 @@ Ordena os arquivos e executa `up()`, com suporte a rollback via `down()`.
 | `axios`               | Cliente HTTP para fazer requisições a APIs externas.                       |
 | `amqplib`             | Biblioteca cliente para comunicação com RabbitMQ via protocolo AMQP.       |
 | `nodemon`             | Ferramenta que reinicia automaticamente a aplicação ao detectar mudanças.  |
+| `vite`                | servidor de desenvolvimento e bundler com HMR (Hot Module Replacement) para projetos web modernos; inicializa rápido e recarrega as mudanças instantaneamente.  |
 
 ---
 
@@ -417,6 +437,7 @@ Ordena os arquivos e executa `up()`, com suporte a rollback via `down()`.
 | `readme.md`                 | Documentação principal do projeto (este arquivo).                                                         |
 | `server.js`                 | Entry point HTTP da aplicação. Sobe o Express e inicializa a API.                                         |
 | `worker`                    | Entrypoint dos workers/consumers. Sobe escutando filas específicas do RabbitMQ.                           |
+| `server.js`                 | Entry point HTTP da aplicação. Sobe o Express e inicializa a API.                                         |
 
 ---
 
@@ -483,6 +504,7 @@ project-network
 | NGINX       | 80             | **8080**       | http://localhost:8080               |
 | PostgreSQL  | 5432           | **6789**       | usado por clients (beekeeper, dbeaver, ...)/ORM/CLI               |
 | RabbitMQ    | 5672, 15672    | **2765**, **15672** | AMQP e painel web http://localhost:15672 |
+| Node Vite HMR    | 5173    | **5173** | http://localhost:5173  |
 
 ---
 
