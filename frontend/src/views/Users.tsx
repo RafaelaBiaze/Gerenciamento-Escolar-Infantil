@@ -42,7 +42,7 @@ export default function Users() {
         if (newOffset >= 0) setOffset(newOffset);
     };
 
-    // --- VALIDAÇÃO (Reintegrada) ---
+    // --- VALIDAÇÃO ---
     const validateForm = () => {
         if (form.login.trim().length < 3) {
             alert("O Login deve ter pelo menos 3 caracteres.");
@@ -61,7 +61,7 @@ export default function Users() {
     };
 
     const handleSave = async () => {
-        if (!validateForm()) return; // Barra se falhar na validação
+        if (!validateForm()) return; 
 
         try {
             if (editingId) {
@@ -99,56 +99,216 @@ export default function Users() {
         }
     };
 
-    return (
-        <div style={{ padding: 20, maxWidth: '800px', margin: '0 auto' }}>
-            <h1>Gestão de Usuários</h1>
-            
-            <div style={{ border: '1px solid #ccc', padding: 20, borderRadius: 8, marginBottom: 30, background: '#fff' }}>
-                <h3 style={{marginTop: 0}}>{editingId ? `Editando Usuário #${editingId}` : 'Novo Usuário'}</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <input placeholder="Login (mín. 3 caracteres)" value={form.login} onChange={e => setForm({...form, login: e.target.value})} />
-                    <input placeholder="Email (ex: nome@teste.com)" value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
-                    <input type="password" placeholder={editingId ? "Nova Senha (opcional)" : "Senha (mín. 6 caracteres)"} value={form.senha} onChange={e => setForm({...form, senha: e.target.value})} />
-                    
-                    <label style={{ fontSize: 14, fontWeight: 'bold' }}>Nível de Acesso:</label>
-                    <select value={form.role} onChange={e => setForm({...form, role: Number(e.target.value)})} style={{ padding: 10, borderRadius: 4, border: '1px solid #ccc' }}>
-                        <option value={1}>Administrador</option>
-                        <option value={2}>Professor</option>
-                        <option value={3}>Responsável</option>
-                    </select>
+    // --- ESTILO REUTILIZÁVEL ---
+    const inputStyle = {
+        width: '100%',
+        padding: '15px',
+        border: '1px solid #e1e1e1',
+        borderRadius: '8px',
+        backgroundColor: '#f9f9f9',
+        fontSize: '15px',
+        fontFamily: 'inherit',
+        outline: 'none',
+        boxSizing: 'border-box' as const 
+    };
 
-                    <div style={{ display: 'flex', gap: 10 }}>
-                        <button onClick={handleSave} style={{ flex: 1, padding: 10, background: editingId ? '#ffc107' : '#28a745', color: editingId ? '#000' : 'white', border: 'none', borderRadius: 4, cursor: 'pointer', fontWeight: 'bold' }}>
-                            {editingId ? 'Atualizar Usuário' : 'Salvar Novo'}
+    return (
+        // Container Principal
+        <div style={{ padding: '40px 20px', maxWidth: '800px', margin: '0 auto', fontFamily: "'Poppins', sans-serif", color: '#333' }}>
+            
+            <h1 style={{ textAlign: 'center', marginBottom: '40px', fontWeight: '600' }}>Gestão de Usuários</h1>
+            
+            {/* --- CARTÃO DO FORMULÁRIO --- */}
+            <div style={{ 
+                backgroundColor: '#ffffff', 
+                padding: '30px', 
+                borderRadius: '15px', 
+                boxShadow: '0 10px 25px rgba(0,0,0,0.05)', 
+                marginBottom: '40px' 
+            }}>
+                <h3 style={{ marginTop: 0, marginBottom: '20px', color: '#444', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
+                    {editingId ? `Editando Usuário #${editingId}` : 'Novo Usuário'}
+                </h3>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                    <input 
+                        placeholder="Login (mín. 3 caracteres)" 
+                        value={form.login} 
+                        onChange={e => setForm({...form, login: e.target.value})} 
+                        style={inputStyle}
+                    />
+                    <input 
+                        placeholder="Email (ex: nome@teste.com)" 
+                        value={form.email} 
+                        onChange={e => setForm({...form, email: e.target.value})} 
+                        style={inputStyle}
+                    />
+                    <input 
+                        type="password" 
+                        placeholder={editingId ? "Nova Senha (opcional)" : "Senha (mín. 6 caracteres)"} 
+                        value={form.senha} 
+                        onChange={e => setForm({...form, senha: e.target.value})} 
+                        style={inputStyle}
+                    />
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <label style={{ fontSize: '14px', fontWeight: '600', color: '#555' }}>Nível de Acesso:</label>
+                        <select 
+                            value={form.role} 
+                            onChange={e => setForm({...form, role: Number(e.target.value)})} 
+                            style={{ ...inputStyle, cursor: 'pointer' }}
+                        >
+                            <option value={1}>Administrador</option>
+                            <option value={2}>Professor</option>
+                            <option value={3}>Responsável</option>
+                        </select>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                        <button 
+                            onClick={handleSave} 
+                            style={{ 
+                                flex: 1, 
+                                padding: '15px', 
+                                backgroundColor: editingId ? '#ffc107' : '#007bff', // Azul padrão, Amarelo se editar
+                                color: editingId ? '#000' : 'white', 
+                                border: 'none', 
+                                borderRadius: '8px', 
+                                cursor: 'pointer', 
+                                fontWeight: '600',
+                                fontSize: '16px',
+                                transition: 'background 0.3s'
+                            }}
+                        >
+                            {editingId ? 'Atualizar Usuário' : 'Salvar Novo Usuário'}
                         </button>
-                        {editingId && <button onClick={cancelEdit} style={{ padding: 10, background: '#6c757d', color: 'white', border: 'none', borderRadius: 4, cursor: 'pointer' }}>Cancelar</button>}
+                        
+                        {editingId && (
+                            <button 
+                                onClick={cancelEdit} 
+                                style={{ 
+                                    padding: '15px', 
+                                    backgroundColor: '#6c757d', 
+                                    color: 'white', 
+                                    border: 'none', 
+                                    borderRadius: '8px', 
+                                    cursor: 'pointer', 
+                                    fontWeight: '600' 
+                                }}
+                            >
+                                Cancelar
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
 
-            <h3>Lista de Usuários</h3>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
+            {/* --- LISTA DE USUÁRIOS --- */}
+            <h3 style={{ color: '#444', marginBottom: '20px', paddingLeft: '5px' }}>Lista de Usuários</h3>
+            
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                 {users.map((u: any) => (
-                    <li key={u.id} style={{ background: '#fff', border: '1px solid #ddd', padding: 15, marginBottom: 10, borderRadius: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <li key={u.id} style={{ 
+                        backgroundColor: '#ffffff', 
+                        padding: '20px', 
+                        marginBottom: '15px', 
+                        borderRadius: '12px', 
+                        display: 'flex', 
+                        justifyContent: 'space-between', 
+                        alignItems: 'center', 
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.03)' 
+                    }}>
                         <div>
-                            <strong>{u.login}</strong> <span style={{ color: '#666' }}>({u.email})</span><br/>
-                            <small>ID: {u.id} | Perfil: {u.role?.nome || (u.id_role === 1 ? 'Admin' : u.id_role === 2 ? 'Professor' : 'Responsável')}</small>
+                            <strong style={{ fontSize: '17px', color: '#222' }}>{u.login}</strong> 
+                            <span style={{ color: '#666', fontSize: '14px', marginLeft: '5px' }}>({u.email})</span><br/>
+                            
+                            <div style={{ marginTop: '5px', fontSize: '13px', color: '#888' }}>
+                                ID: {u.id} <span style={{ margin: '0 5px' }}>|</span> 
+                                <span style={{ fontWeight: 'bold', color: u.id_role === 1 ? '#dc3545' : '#007bff' }}>
+                                    {u.role?.nome || (u.id_role === 1 ? 'Admin' : u.id_role === 2 ? 'Professor' : 'Responsável')}
+                                </span>
+                            </div>
                         </div>
-                        <div>
-                            <button onClick={() => handleEdit(u)} style={{ marginRight: 5, background: '#ffc107', border: 'none', padding: '5px 10px', borderRadius: 4, cursor: 'pointer' }}>Editar</button>
-                            <button onClick={() => handleDelete(u.id)} style={{ background: '#dc3545', color: 'white', border: 'none', padding: '5px 10px', borderRadius: 4, cursor: 'pointer' }}>Excluir</button>
+                        
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                            <button 
+                                onClick={() => handleEdit(u)} 
+                                style={{ 
+                                    backgroundColor: '#fff3cd', 
+                                    color: '#856404', 
+                                    border: 'none', 
+                                    padding: '8px 15px', 
+                                    borderRadius: '6px', 
+                                    cursor: 'pointer', 
+                                    fontWeight: '600', 
+                                    fontSize: '14px' 
+                                }}
+                            >
+                                Editar
+                            </button>
+                            <button 
+                                onClick={() => handleDelete(u.id)} 
+                                style={{ 
+                                    backgroundColor: '#f8d7da', 
+                                    color: '#721c24', 
+                                    border: 'none', 
+                                    padding: '8px 15px', 
+                                    borderRadius: '6px', 
+                                    cursor: 'pointer', 
+                                    fontWeight: '600', 
+                                    fontSize: '14px' 
+                                }}
+                            >
+                                Excluir
+                            </button>
                         </div>
                     </li>
                 ))}
             </ul>
 
-            {/* BOTÕES DE PAGINAÇÃO */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20, alignItems: 'center' }}>
-                <button onClick={handlePrev} disabled={offset === 0} style={{ padding: '10px 20px', background: offset === 0 ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: 4, cursor: offset === 0 ? 'not-allowed' : 'pointer' }}>&larr; Anterior</button>
-                <span>Página { (offset / limit) + 1 }</span>
-                <button onClick={handleNext} disabled={nextOffset === null} style={{ padding: '10px 20px', background: nextOffset === null ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: 4, cursor: nextOffset === null ? 'not-allowed' : 'pointer' }}>Próxima &rarr;</button>
+            {/* --- PAGINAÇÃO --- */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px', padding: '0 10px' }}>
+                <button 
+                    onClick={handlePrev} 
+                    disabled={offset === 0} 
+                    style={{ 
+                        padding: '10px 20px', 
+                        backgroundColor: offset === 0 ? '#e0e0e0' : '#007bff', 
+                        color: offset === 0 ? '#888' : 'white', 
+                        border: 'none', 
+                        borderRadius: '8px', 
+                        cursor: offset === 0 ? 'not-allowed' : 'pointer',
+                        fontWeight: '600'
+                    }}
+                >
+                    &larr; Anterior
+                </button>
+                
+                <span style={{ color: '#666', fontWeight: '600' }}>Página { (offset / limit) + 1 }</span>
+                
+                <button 
+                    onClick={handleNext} 
+                    disabled={nextOffset === null} 
+                    style={{ 
+                        padding: '10px 20px', 
+                        backgroundColor: nextOffset === null ? '#e0e0e0' : '#007bff', 
+                        color: nextOffset === null ? '#888' : 'white', 
+                        border: 'none', 
+                        borderRadius: '8px', 
+                        cursor: nextOffset === null ? 'not-allowed' : 'pointer',
+                        fontWeight: '600',
+                        boxShadow: nextOffset !== null ? '0 4px 6px rgba(0,123,255,0.2)' : 'none'
+                    }}
+                >
+                    Próxima &rarr;
+                </button>
             </div>
-            <br/><a href="/professores" style={{ textDecoration: 'none', color: '#007bff' }}>Ir para Gestão de Professores &rarr;</a>
+            
+            <div style={{ marginTop: '30px', textAlign: 'center' }}>
+                <a href="/professores" style={{ textDecoration: 'none', color: '#007bff', fontSize: '15px', fontWeight: '500' }}>
+                    Ir para Gestão de Professores &rarr;
+                </a>
+            </div>
         </div>
     );
 }

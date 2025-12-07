@@ -44,40 +44,31 @@ export default function Professores() {
     const handleNext = () => { if (nextOffset !== null) setOffset(nextOffset); };
     const handlePrev = () => { if (offset - limit >= 0) setOffset(offset - limit); };
 
-    // --- VALIDAÇÃO (Reintegrada) ---
+    // --- VALIDAÇÃO ---
     const validateForm = () => {
-        // 1. Valida Nome
         if (form.nome_professor.trim().length < 3) {
             alert("Nome do professor deve ter no mínimo 3 letras.");
             return false;
         }
-        
-        // 2. Valida CPF (Remove tudo que não é número)
         const cpfLimpo = form.cpf_professor.replace(/\D/g, '');
         if (cpfLimpo.length !== 11) {
             alert(`CPF inválido: Você digitou ${cpfLimpo.length} números. O CPF deve ter exatamente 11.`);
             return false;
         }
-
-        // 3. Valida Telefone (Remove tudo que não é número)
         const telLimpo = form.telefone_professor.replace(/\D/g, '');
-        // Aceita 10 (Fixo) ou 11 (Celular)
         if (telLimpo.length < 10 || telLimpo.length > 11) {
-            alert(`Telefone inválido: Você digitou ${telLimpo.length} números. Deve ter 10 ou 11 (DDD + Número).`);
+            alert(`Telefone inválido: Você digitou ${telLimpo.length} números. Deve ter 10 ou 11.`);
             return false;
         }
-
-        // 4. Valida Vínculo de Usuário
         if (form.id_user === 0) {
             alert("Você deve vincular um Usuário de Acesso ao professor.");
             return false;
         }
-
         return true;
     };
 
     const handleSave = async () => {
-        if (!validateForm()) return; // Barra se falhar na validação
+        if (!validateForm()) return;
 
         try {
             const payload = { user: form.id_user, nome: form.nome_professor, cpf: form.cpf_professor, telefone: form.telefone_professor };
@@ -108,55 +99,216 @@ export default function Professores() {
 
     const handleDelete = async (id: number) => { if (confirm('Tem certeza?')) { await api.delete(`/api/professores/${id}`); fetchProfs(); } };
 
+    // --- ESTILOS REUTILIZÁVEIS ---
+    const inputStyle = {
+        width: '100%',
+        padding: '15px',
+        border: '1px solid #e1e1e1',
+        borderRadius: '8px',
+        backgroundColor: '#f9f9f9',
+        fontSize: '15px',
+        fontFamily: 'inherit',
+        boxSizing: 'border-box' as const, 
+        outline: 'none'
+    };
+
     return (
-        <div style={{ padding: 20, maxWidth: '800px', margin: '0 auto' }}>
-            <h1>Gestão de Professores</h1>
+        // Container Principal
+        <div style={{ padding: '40px 20px', maxWidth: '800px', margin: '0 auto', fontFamily: "'Poppins', sans-serif", color: '#333' }}>
             
-            <div style={{ border: '1px solid #ccc', padding: 20, borderRadius: 8, marginBottom: 30, background: '#fff' }}>
-                <h3 style={{marginTop: 0}}>{editingId ? `Editando Professor #${editingId}` : 'Novo Professor'}</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <input placeholder="Nome Completo" value={form.nome_professor} onChange={e => setForm({...form, nome_professor: e.target.value})} />
-                    <input placeholder="CPF (11 números)" value={form.cpf_professor} onChange={e => setForm({...form, cpf_professor: e.target.value})} maxLength={14} />
-                    <input placeholder="Telefone (DDD + Número)" value={form.telefone_professor} onChange={e => setForm({...form, telefone_professor: e.target.value})} maxLength={15} />
-                    <label style={{ fontSize: 14, fontWeight: 'bold' }}>Vincular Usuário de Acesso:</label>
-                    <select value={form.id_user} onChange={e => setForm({...form, id_user: Number(e.target.value)})} style={{ padding: 10, borderRadius: 4, border: '1px solid #ccc' }}>
-                        <option value={0}>-- Selecione um Usuário --</option>
-                        {users.map((u: any) => (<option key={u.id} value={u.id}>{u.login} ({u.email})</option>))}
-                    </select>
-                    <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
-                        <button onClick={handleSave} style={{ flex: 1, padding: 10, background: editingId ? '#ffc107' : '#007bff', color: editingId ? '#000' : 'white', border: 'none', borderRadius: 4, cursor: 'pointer', fontWeight: 'bold' }}>
+            <h1 style={{ textAlign: 'center', marginBottom: '40px', fontWeight: '600' }}>Gestão de Professores</h1>
+            
+            {/* --- CARTÃO DO FORMULÁRIO --- */}
+            <div style={{ 
+                backgroundColor: '#ffffff', 
+                padding: '30px', 
+                borderRadius: '15px', 
+                boxShadow: '0 10px 25px rgba(0,0,0,0.05)', 
+                marginBottom: '40px' 
+            }}>
+                <h3 style={{ marginTop: 0, marginBottom: '20px', color: '#444', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
+                    {editingId ? `Editando Professor #${editingId}` : 'Novo Professor'}
+                </h3>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                    <input 
+                        placeholder="Nome Completo" 
+                        value={form.nome_professor} 
+                        onChange={e => setForm({...form, nome_professor: e.target.value})} 
+                        style={inputStyle}
+                    />
+                    <input 
+                        placeholder="CPF (11 números)" 
+                        value={form.cpf_professor} 
+                        onChange={e => setForm({...form, cpf_professor: e.target.value})} 
+                        maxLength={14} 
+                        style={inputStyle}
+                    />
+                    <input 
+                        placeholder="Telefone (DDD + Número)" 
+                        value={form.telefone_professor} 
+                        onChange={e => setForm({...form, telefone_professor: e.target.value})} 
+                        maxLength={15} 
+                        style={inputStyle}
+                    />
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <label style={{ fontSize: '14px', fontWeight: '600', color: '#555' }}>Vincular Usuário de Acesso:</label>
+                        <select 
+                            value={form.id_user} 
+                            onChange={e => setForm({...form, id_user: Number(e.target.value)})} 
+                            style={{ ...inputStyle, cursor: 'pointer' }}
+                        >
+                            <option value={0}>-- Selecione um Usuário --</option>
+                            {users.map((u: any) => (<option key={u.id} value={u.id}>{u.login} ({u.email})</option>))}
+                        </select>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                        <button 
+                            onClick={handleSave} 
+                            style={{ 
+                                flex: 1, 
+                                padding: '15px', 
+                                backgroundColor: editingId ? '#ffc107' : '#007bff', // Amarelo se editar, Azul se novo
+                                color: editingId ? '#000' : 'white', 
+                                border: 'none', 
+                                borderRadius: '8px', 
+                                cursor: 'pointer', 
+                                fontWeight: '600',
+                                fontSize: '16px',
+                                transition: 'background 0.3s'
+                            }}
+                        >
                             {editingId ? 'Atualizar Dados' : 'Salvar Professor'}
                         </button>
-                        {editingId && <button onClick={cancelEdit} style={{ padding: 10, background: '#6c757d', color: 'white', border: 'none', borderRadius: 4, cursor: 'pointer' }}>Cancelar</button>}
+                        
+                        {editingId && (
+                            <button 
+                                onClick={cancelEdit} 
+                                style={{ 
+                                    padding: '15px', 
+                                    backgroundColor: '#6c757d', 
+                                    color: 'white', 
+                                    border: 'none', 
+                                    borderRadius: '8px', 
+                                    cursor: 'pointer',
+                                    fontWeight: '600'
+                                }}
+                            >
+                                Cancelar
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
 
-            <h3>Lista de Professores</h3>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
+            {/* --- LISTA DE PROFESSORES --- */}
+            <h3 style={{ color: '#444', marginBottom: '20px', paddingLeft: '5px' }}>Lista de Professores</h3>
+            
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                 {profs.map((p: any) => (
-                    <li key={p.id} style={{ background: '#fff', border: '1px solid #ddd', padding: 15, marginBottom: 10, borderRadius: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <li key={p.id} style={{ 
+                        backgroundColor: '#ffffff', 
+                        padding: '20px', 
+                        marginBottom: '15px', 
+                        borderRadius: '12px', 
+                        display: 'flex', 
+                        justifyContent: 'space-between', 
+                        alignItems: 'center', 
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.03)' 
+                    }}>
                         <div>
-                            <strong>{p.nome_professor}</strong><br/>
-                            <small>CPF: {p.cpf_professor} | Tel: {p.telefone_professor}</small><br/>
-                            <small style={{ color: 'blue' }}>Usuário: {p.user?.login || '—'}</small>
+                            <strong style={{ fontSize: '17px', color: '#222' }}>{p.nome_professor}</strong><br/>
+                            <div style={{ marginTop: '5px', color: '#666', fontSize: '14px' }}>
+                                <span>CPF: {p.cpf_professor}</span> 
+                                <span style={{ margin: '0 5px', color: '#ddd' }}>|</span> 
+                                <span>Tel: {p.telefone_professor}</span>
+                            </div>
+                            <div style={{ marginTop: '5px', fontSize: '13px', color: '#007bff', fontWeight: '600' }}>
+                                Usuário: {p.user?.login || '—'}
+                            </div>
                         </div>
-                        <div>
-                            <button onClick={() => handleEdit(p)} style={{ marginRight: 5, background: '#ffc107', border: 'none', padding: '5px 10px', borderRadius: 4, cursor: 'pointer' }}>Editar</button>
-                            <button onClick={() => handleDelete(p.id)} style={{ background: '#dc3545', color: 'white', border: 'none', padding: '5px 10px', borderRadius: 4, cursor: 'pointer' }}>Excluir</button>
+                        
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                            <button 
+                                onClick={() => handleEdit(p)} 
+                                style={{ 
+                                    backgroundColor: '#fff3cd', 
+                                    color: '#856404', 
+                                    border: 'none', 
+                                    padding: '8px 15px', 
+                                    borderRadius: '6px', 
+                                    cursor: 'pointer', 
+                                    fontWeight: '600', 
+                                    fontSize: '14px' 
+                                }}
+                            >
+                                Editar
+                            </button>
+                            <button 
+                                onClick={() => handleDelete(p.id)} 
+                                style={{ 
+                                    backgroundColor: '#f8d7da', 
+                                    color: '#721c24', 
+                                    border: 'none', 
+                                    padding: '8px 15px', 
+                                    borderRadius: '6px', 
+                                    cursor: 'pointer', 
+                                    fontWeight: '600', 
+                                    fontSize: '14px' 
+                                }}
+                            >
+                                Excluir
+                            </button>
                         </div>
                     </li>
                 ))}
             </ul>
 
-            {/* BOTÕES DE PAGINAÇÃO */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20, alignItems: 'center' }}>
-                <button onClick={handlePrev} disabled={offset === 0} style={{ padding: '10px 20px', background: offset === 0 ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: 4, cursor: offset === 0 ? 'not-allowed' : 'pointer' }}>&larr; Anterior</button>
-                <span>Página { (offset / limit) + 1 }</span>
-                <button onClick={handleNext} disabled={nextOffset === null} style={{ padding: '10px 20px', background: nextOffset === null ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: 4, cursor: nextOffset === null ? 'not-allowed' : 'pointer' }}>Próxima &rarr;</button>
+            {/* --- PAGINAÇÃO (Estilo Moderno) --- */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px', padding: '0 10px' }}>
+                <button 
+                    onClick={handlePrev} 
+                    disabled={offset === 0} 
+                    style={{ 
+                        padding: '10px 20px', 
+                        backgroundColor: offset === 0 ? '#e0e0e0' : '#007bff', // Cinza se desativado
+                        color: offset === 0 ? '#888' : 'white', 
+                        border: 'none', 
+                        borderRadius: '8px', 
+                        cursor: offset === 0 ? 'not-allowed' : 'pointer',
+                        fontWeight: '600'
+                    }}
+                >
+                    &larr; Anterior
+                </button>
+                
+                <span style={{ color: '#666', fontWeight: '600' }}>Página { (offset / limit) + 1 }</span>
+                
+                <button 
+                    onClick={handleNext} 
+                    disabled={nextOffset === null} 
+                    style={{ 
+                        padding: '10px 20px', 
+                        backgroundColor: nextOffset === null ? '#e0e0e0' : '#007bff', 
+                        color: nextOffset === null ? '#888' : 'white', 
+                        border: 'none', 
+                        borderRadius: '8px', 
+                        cursor: nextOffset === null ? 'not-allowed' : 'pointer',
+                        fontWeight: '600',
+                        boxShadow: nextOffset !== null ? '0 4px 6px rgba(0,123,255,0.2)' : 'none'
+                    }}
+                >
+                    Próxima &rarr;
+                </button>
             </div>
             
-            <br /><a href="/users" style={{ textDecoration: 'none', color: '#007bff' }}>&larr; Voltar para Usuários</a>
+            <div style={{ marginTop: '30px', textAlign: 'center' }}>
+                <a href="/users" style={{ textDecoration: 'none', color: '#555', fontSize: '14px', fontWeight: '500' }}>
+                    &larr; Voltar para Usuários
+                </a>
+            </div>
         </div>
     );
 }
