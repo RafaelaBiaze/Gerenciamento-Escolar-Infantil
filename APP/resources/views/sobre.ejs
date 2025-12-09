@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Sobre o Sistema (SSR)</title>
+    <style>
+        body { font-family: sans-serif; padding: 40px; text-align: center; background-color: #f4f4f4; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: inline-block; min-width: 300px; }
+        h1 { color: #007bff; }
+        .stat { font-size: 18px; margin: 10px 0; color: #555; }
+        .number { font-weight: bold; color: #333; font-size: 22px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Sistema Escolar UniFAAT</h1>
+        <p>Relatório gerado via <strong>Server-Side Rendering (EJS)</strong></p>
+        <p>Data: <%= dataAtual %></p>
+        
+        <hr>
+        
+        <div class="stat">
+            Usuários de Acesso: <span class="number"><%= totalUsers %></span>
+        </div>
+
+        <div class="stat">
+            Professores Cadastrados: <span class="number"><%= totalProfessores %></span>
+        </div>
+        
+        <br>
+        <a href="http://localhost:5173" style="text-decoration: none; color: #007bff; font-weight: bold;">
+            &larr; Voltar para o Sistema
+        </a>
+    </div>
+</body>
+</html>

@@ -2,11 +2,14 @@ import express from 'express';
 import chalk from 'chalk';
 import http from 'http';            // Necessário para unir Express + Socket
 import { Server } from 'socket.io'; // Biblioteca do WebSocket
-import cors from 'cors';            // Libera o acesso do Vite
+import cors from 'cors';       
+import path from 'path';     // Libera o acesso do Vite
 
 import "./bootstrap/app.js"
 import routes from "./routes/routes.js";
 import initRelations from "./config/sequelize_relations.js";
+import UserModel from './app/Models/UserModel.js';
+import ProfessorModel from './app/Models/ProfessorModel.js';
 
 const app = express();
 
@@ -19,6 +22,28 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ROTA EJS (SSR)
+app.set('view engine', 'ejs');
+app.set('views', path.join(process.cwd(), 'resources', 'views'));
+app.get('/sobre', async (req, res) => {
+    try {
+        // 2. Contar as duas tabelas
+        const totalUsers = await UserModel.count();
+        const totalProfessores = await ProfessorModel.count();
+        const dataAtual = new Date().toLocaleString('pt-BR');
+        
+        // 3. Enviar as duas variáveis para a view
+        res.render('sobre', { 
+            totalUsers, 
+            totalProfessores, 
+            dataAtual 
+        });
+    } catch (error) {
+        console.error(error);
+        res.send("Erro ao carregar dados do servidor.");
+    }
+});
 
 // 2. Configura Rotas
 app.use("/", routes);
