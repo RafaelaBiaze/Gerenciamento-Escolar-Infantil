@@ -18,17 +18,18 @@ O projeto visa desenvolver um sistema de gerenciamento para a Escola Infantil Un
 
 1. [Instalação e Execução](#instalacao-e-execucao)
 2. [Acesse](#acesse)
-3. [Como Criar Elementos](#como-criar-elementos)
+3. [Documentação da API](#documentação-da-api)
+4. [Como Criar Elementos](#como-criar-elementos)
    - [Criar uma Rota](#criar-uma-rota)
    - [Criar um Controller](#criar-um-controller)
    - [Criar um Middleware](#criar-um-middleware)
    - [Criar um Command](#criar-um-command)
    - [Migrations do Projeto](#migrations)
    - [Seeds do Projeto](#seeds)
-4. [Bibliotecas Utilizadas](#bibliotecas-utilizadas)
-5. [Estrutura de Diretórios (raiz)](#estrutura-de-diretorios-raiz)
-6. [Como Criar um Novo Documento Swagger](#swagger)
-7. [Containers e Imagens Docker](#containers-e-imagens-docker)
+5. [Bibliotecas Utilizadas](#bibliotecas-utilizadas)
+6. [Estrutura de Diretórios (raiz)](#estrutura-de-diretorios-raiz)
+7. [Como Criar um Novo Documento Swagger](#swagger)
+8. [Containers e Imagens Docker](#containers-e-imagens-docker)
 
 ---
 
@@ -167,6 +168,39 @@ O projeto visa desenvolver um sistema de gerenciamento para a Escola Infantil Un
 **Importante:** O arquivo `./Insomnia.yml` **deve** ser utilizado no Insomnia para testar as rotas.
 
 > Pasta `Docs` fora da aplicação, é somente para arquivos de documentação do banco de dados, como MER e DER.
+
+---
+
+## Documentação da API
+
+> O frontend consome a API do backend para realizar as operações de CRUD. Abaixo estão os principais endpoints utilizados:
+
+#### Usuários
+* `GET /api/users?limit=10&offset=0` - Retorna a lista paginada de usuários.
+* `POST /api/users` - Cria um novo usuário (JSON Body: `{ login, email, senha, role }`).
+* `PUT /api/users/:id` - Atualiza os dados de um usuário existente.
+* `DELETE /api/users/:id` - Remove um usuário do sistema.
+
+#### Professores
+* `GET /api/professores?limit=10&offset=0` - Retorna a lista paginada de professores com os dados do usuário vinculado.
+* `POST /api/professores` - Cria um novo professor vinculado a um `id_user`.
+* `PUT /api/professores/:id` - Atualiza os dados cadastrais do professor.
+* `DELETE /api/professores/:id` - Exclui o registro do professor.
+
+#### Autenticação
+* `POST /login` - Recebe `{ email, senha }` e retorna um Token JWT.
+
+### Funcionalidades do Frontend:
+
+1. **WebSocket e Custom Hook**
+> A comunicação em tempo real foi implementada utilizando a biblioteca `socket.io`.
+    - **Backend:** O servidor HTTP foi unificado com o servidor WebSocket na porta 3000 (exposto na 8080). Ele escuta o evento `atualizacao` e faz um *broadcast* (retransmite) para todos os clientes conectados.
+    - **Frontend:** Foi criado um **Custom Hook** chamado `useWebSocket` (`src/hooks/useWebSocket.ts`). Esse hook gerencia a conexão única, reconexão automática e expõe a função `sendMessage` para os componentes, além de atualizar o estado quando recebe mensagens do servidor.
+
+2. **Views EJS (Server-Side Rendering)**
+> Para a renderização no servidor, foi implementada uma rota específica que utiliza a template engine **EJS**.
+    - **Rota:** `GET /sobre` (Acesse em: http://localhost:8080/sobre)
+    - **Funcionalidade:** Exibe a data atual do servidor e a contagem total de usuários cadastrados no banco, renderizados diretamente pelo Node.js antes de chegar ao navegador.
 
 ---
 
@@ -378,9 +412,13 @@ Ordena os arquivos e executa `up()`, com suporte a rollback via `down()`.
 
 ## Bibliotecas Utilizadas <a name="bibliotecas-utilizadas"></a>
 
+### Backend
 | Biblioteca            | Finalidade                                                                 |
 |-----------------------|----------------------------------------------------------------------------|
 | `express`             | Framework web para Node.js usado para criar APIs e servidores HTTP.        |
+| `ejs`                 | Template Engine para renderizar views no servidor (SSR).                   |
+| `socket.io`           | Biblioteca para comunicação em tempo real bidirecional.                    |
+| `cors`                | Middleware para habilitar CORS e permitir acesso do Frontend.              |
 | `chalk`               | Biblioteca para estilizar saídas no terminal com cores e ênfases.          |
 | `dotenv`              | Carrega variáveis de ambiente de um arquivo `.env` para `process.env`.     |
 | `pg`                  | Cliente PostgreSQL para Node.js, usado para conexão e execução de queries. |
@@ -395,7 +433,16 @@ Ordena os arquivos e executa `up()`, com suporte a rollback via `down()`.
 | `axios`               | Cliente HTTP para fazer requisições a APIs externas.                       |
 | `amqplib`             | Biblioteca cliente para comunicação com RabbitMQ via protocolo AMQP.       |
 | `nodemon`             | Ferramenta que reinicia automaticamente a aplicação ao detectar mudanças.  |
-| `vite`                | servidor de desenvolvimento e bundler com HMR (Hot Module Replacement) para projetos web modernos; inicializa rápido e recarrega as mudanças instantaneamente.  |
+
+### Frontend
+| Biblioteca            | Finalidade                                                                 |
+|-----------------------|----------------------------------------------------------------------------|
+| `react`               | Biblioteca JavaScript para criar interfaces de usuário.                    |
+| `typescript`          | Superset de JavaScript que adiciona tipagem estática.                      |
+| `vite`                | Ferramenta de build rápida para projetos web modernos.                     |
+| `axios`               | Cliente HTTP para consumir a API REST do backend.                          |
+| `socket.io-client`    | Cliente para conectar ao WebSocket do backend.                             |
+| `react-router-dom`    | Biblioteca de roteamento para navegar entre as views da aplicação.         |
 
 ---
 
@@ -403,41 +450,27 @@ Ordena os arquivos e executa `up()`, com suporte a rollback via `down()`.
 
 | Caminho / Pasta             | Descrição                                                                                                 |
 |-----------------------------|-----------------------------------------------------------------------------------------------------------|
-| `app/`                      | Lógica principal da aplicação organizada por domínio.                                                     |
-| `app/Commands/`             | Comandos CLI como `migrate`, `seed`, `dispatch`, executados com `node command <comando>`.                |
-| `app/Http/`                 | Código relacionado as requisições HTTP.                                                                   |
-| `app/Http/Controllers/`     | Controllers que lidam com requisições e respostas das rotas.                                              |
-| `app/Http/Middlewares/`     | Middlewares como autenticação, validação e logger HTTP.                                                   |
-| `app/Jobs/`                 | Jobs consumidos pelos workers. Cada arquivo representa uma tarefa isolada e assíncrona.                   |
-| `app/Models/`               | Models Sequelize que representam e manipulam tabelas do banco de dados.                                  |
-| `bootstrap/`                | Inicializações específicas do projeto, como setup global de helpers, constantes e variáveis de ambiente.  |
-| `config/`                   | Arquivos de configuração para serviços como RabbitMQ, Postgres, JWT, Sequelize, Swagger, etc.             |
-| `Core/`                     | Núcleo do sistema, como se fosse uma lib interna criada por nós mesmos.                                   |
-| `Core/QueueCore/`           | Lógica de workers: registro, execução, escuta de filas.                                                   |
-| `Core/CommandCore/`         | Execução e estrutura dos comandos CLI.                                                                    |
-| `Core/MigrationCore/`       | Lógica por trás das migrations via CLI.                                                                   |
-| `Core/SeedCore/`            | Lógica por trás das seeds via CLI.                                                                        |
-| `Core/RoutesCore/`          | Registro e estrutura das rotas carregadas dinamicamente.                                                  |
-| `database/migrations/`      | Scripts de criação/modificação de tabelas versionados.                                                    |
-| `database/seeds/`           | Scripts para popular dados iniciais no banco.                                                             |
-| `docker/`                   | Dockerfiles específicos para cada serviço da aplicação.                                                   |
-| `docs/`                     | (Opcional) Documentação de APIs Swagger em JSON.                                                          |
-| `node_modules/`             | Pacotes npm instalados automaticamente.                                                                   |
-| `public/`                   | Arquivos públicos (como `index.html`) servidos diretamente por HTTP.                                      |
-| `routes/`                   | Arquivos de definição de rotas, geralmente organizados por entidade.                                      |
-| `storage/`                  | Uploads, arquivos temporários ou pastas auxiliares da aplicação.                                          |
-| `.env`                      | Variáveis de ambiente sensíveis carregadas em tempo de execução.                                          |
-| `.env.example`              | Template de `.env` para novos devs copiarem e configurarem.                                               |
-| `.gitignore`                | Lista de arquivos e pastas que o Git deve ignorar.                                                        |
-| `command`                   | Entry point dos comandos CLI (`node command ...`).                                                        |
-| `docker-compose.yml`        | Arquivo de orquestração dos containers (web, worker, postgres, rabbit, etc).                             |
-| `Insomnia.yaml`             | Export das rotas da API para importar no Insomnia.                                                        |
-| `package.json`              | Lista de dependências, scripts npm e metadados do projeto.                                                |
-| `package-lock.json`         | Trava exata das versões das dependências instaladas.                                                      |
-| `readme.md`                 | Documentação principal do projeto (este arquivo).                                                         |
-| `server.js`                 | Entry point HTTP da aplicação. Sobe o Express e inicializa a API.                                         |
-| `worker`                    | Entrypoint dos workers/consumers. Sobe escutando filas específicas do RabbitMQ.                           |
-| `server.js`                 | Entry point HTTP da aplicação. Sobe o Express e inicializa a API.                                         |
+| `APP/`                      | **(Backend)** Raiz da aplicação Node.js/Express, contendo toda a lógica do servidor.                      |
+| `APP/app/`                  | Lógica principal da aplicação organizada por domínio.                                                     |
+| `APP/app/Commands/`         | Comandos CLI como `migrate`, `seed`, `dispatch`, executados com `node command <comando>`.                 |
+| `APP/app/Http/`             | Código relacionado às requisições HTTP (Controllers, Middlewares).                                        |
+| `APP/app/Jobs/`             | Jobs consumidos pelos workers (tarefas assíncronas).                                                      |
+| `APP/app/Models/`           | Models Sequelize que representam e manipulam as tabelas do banco de dados.                                |
+| `APP/bootstrap/`            | Inicializações do projeto (helpers globais, constantes, variáveis de ambiente).                           |
+| `APP/config/`               | Configurações de serviços (RabbitMQ, Postgres, JWT, Sequelize, etc).                                      |
+| `APP/Core/`                 | Núcleo do sistema (libs internas para CLI, Migrations, Seeds e Rotas).                                    |
+| `APP/database/`             | Scripts de banco de dados: `migrations` (estrutura) e `seeds` (população inicial).                        |
+| `APP/docker/`               | Dockerfiles específicos para cada serviço (Node, Nginx, Workers).                                         |
+| `APP/docs/`                 | Documentação da API (Swagger/OpenAPI).                                                                    |
+| `APP/resources/views/`      | **(EJS)** Templates renderizados no servidor (ex: página `/sobre`).                                       |
+| `APP/routes/`               | Definição das rotas da API e Web.                                                                         |
+| `APP/server.js`             | Entry point do Backend. Inicia o Express, WebSocket e escuta a porta.                                     |
+| `APP/worker`                | Entry point dos workers que processam a fila RabbitMQ.                                                    |
+| `frontend/`                 | **(Frontend)** Raiz da aplicação React + Vite.                                                            |
+| `frontend/src/views/`       | Telas da aplicação (Login, Usuários, Professores) criadas com React.                                      |
+| `frontend/src/hooks/`       | Hooks customizados (ex: `useWebSocket` para tempo real).                                                  |
+| `frontend/src/services/`    | Configuração do Axios para comunicação com a API.                                                         |
+| `docker-compose.yml`        | Orquestração dos containers (Web, Worker, Postgres, RabbitMQ, Nginx).                                     |
 
 ---
 
