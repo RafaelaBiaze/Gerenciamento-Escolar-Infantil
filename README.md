@@ -1,6 +1,6 @@
 # Projeto de Sistema de Gerenciamento Escolar Infantil
 
-O projeto visa desenvolver um sistema de gerenciamento para a Escola Infantil UniFAAT-ADS, com o objetivo de automatizar e otimizar o controle de pagamentos, presenças e atividades dos alunos, substituindo o método manual atual feito em cadernos.
+O projeto visa desenvolver um sistema de gerenciamento para a Escola Infantil UniFAAT-ADS, com o objetivo de automatizar e otimizar o controle de pagamentos, presenças e atividades dos alunos, substituindo o método manual atual feito em cadernos
 
 ---
 
